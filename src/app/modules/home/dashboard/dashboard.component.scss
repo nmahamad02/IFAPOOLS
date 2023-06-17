@@ -789,3 +789,9 @@
     @include elevation(z5, $shadow-color);
   }
 }
+
+#divChart{
+  display: block;
+  width: 100%;
+  height: 100%;
+}

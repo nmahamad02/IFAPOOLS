@@ -1,1 +1,343 @@
-<p>account works!</p>
+<div class="container-fluid">
+    <div class="row no-gutters">
+        <div class="visualization-heading col-12">
+            <div class="heading-info">
+                <div class="row">
+                    <div class="col-9">
+                        <h2 class="heading-title">Profile</h2>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <form class="form-container" [formGroup]="propertyForm">
+                <div class="row">
+                    <div class="col-9">
+                        <div class="row">
+                            <div class="col-3">
+                                <mat-form-field class="full-width"> 
+                                    <mat-label>CPR Number</mat-label>
+                                    <input #cprno type="text" formControlName="cprno" matInput required (keydown.enter)="getDetails(cprno.value)" readonly>
+                                    <mat-error>CPR is <strong>required</strong></mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-9">
+                                <mat-form-field class="full-width"> 
+                                    <mat-label>Name</mat-label>
+                                    <input type="text" formControlName="name" matInput required readonly>
+                                    <mat-error>Name is <strong>required</strong></mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <mat-form-field class="full-width"> 
+                                    <mat-label>Address 1</mat-label>
+                                    <input type="text" formControlName="add1" matInput readonly>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4">
+                                <mat-form-field class="full-width"> 
+                                    <mat-label>Address 2</mat-label>
+                                    <input type="text" formControlName="add2" matInput readonly>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4">
+                                <mat-form-field class="full-width"> 
+                                    <mat-label>Address 3</mat-label>
+                                    <input type="text" formControlName="add3" matInput readonly>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <mat-form-field class="full-width"> 
+                                    <mat-label>Phone 1</mat-label>
+                                    <input type="text" formControlName="phone1" matInput readonly>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <mat-form-field class="full-width"> 
+                                    <mat-label>Phone 2</mat-label>
+                                    <input type="text" formControlName="phone2" matInput readonly>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <mat-form-field class="full-width"> 
+                                    <mat-label>Mobile Number</mat-label>
+                                    <input type="text" formControlName="mobile" matInput readonly>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <mat-form-field class="full-width"> 
+                                    <mat-label>Email ID</mat-label>
+                                    <input type="text" formControlName="email" matInput readonly>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <img [src]="imageSrc" *ngIf="imageSrc" style="width:100%">
+                        </div>
+                    </div>
+                </div>
+                <ng-container formArrayName="properties" *ngIf="isOwner">
+                    <mat-card *ngFor="let prop of properties.controls; let i = index;" [formGroupName]="i" >
+                        <mat-card-content>
+                            <mat-tab-group>
+                                <mat-tab label="Details">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Unit Number</mat-label>
+                                                        <input type="text" formControlName="pHFNo" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Title Deed</mat-label>
+                                                        <input type="text" formControlName="pParcelNo" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Plot Number</mat-label>
+                                                        <input type="text" formControlName="pPlotNo" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Plot Area</mat-label>
+                                                        <input type="text" formControlName="pPlotArea" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Built Up Area</mat-label>
+                                                        <input type="text" formControlName="pBuiltUpArea" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Total Area</mat-label>
+                                                        <input type="text" formControlName="pTotalArea" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Zone</mat-label>
+                                                        <input type="text" formControlName="pZone" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Vote Weightage</mat-label>
+                                                        <input type="text" formControlName="pVoteWeightage" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Eligibility</mat-label>
+                                                        <input type="text" formControlName="pEligibity" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-divider [vertical]="true"></mat-divider>
+                                        <div class="col">
+                                            <div class="col-12">
+                                                <mat-form-field class="full-width"> 
+                                                    <mat-label>Rooms</mat-label>
+                                                    <input type="text" formControlName="pRooms" matInput readonly>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12">
+                                                <mat-form-field class="full-width"> 
+                                                    <mat-label>Bathrooms</mat-label>
+                                                    <input type="text" formControlName="pBathrooms" matInput readonly>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12">
+                                                <mat-form-field class="full-width"> 
+                                                    <mat-label>Car Park Slots</mat-label>
+                                                    <input type="text" formControlName="pCarParkSlots" matInput readonly>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="Documents">
+                                    <br>
+                                    <ng-container formArrayName="pDocuments">
+                                        <div class="row">
+                                            <div class="col-4" *ngFor="let doc of documents(i).controls; let j = index" [formGroupName]="j">
+                                                <mat-card>
+                                                    <mat-card-content>
+                                                        <div class="row">
+                                                            <div class="col-9">
+                                                                <mat-form-field class="full-width"> 
+                                                                    <mat-label>Name</mat-label>
+                                                                    <input type="text" formControlName="pDocumentSource" matInput>
+                                                                </mat-form-field>                                                       
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <button class="btn-success btn text-white btn-block" title="View document" (click)="goToLink(documents(i).at(j).value.pDocumentUrl)">
+                                                                    <mat-icon>arrow_right</mat-icon> 
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                             <pdf-viewer [src]="documents(i).at(j).value.pDocumentUrl" [original-size]="false" style="height: 100%; width: 100%;"></pdf-viewer>
+                                                        </div>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </mat-tab>
+                            </mat-tab-group>                        
+                        </mat-card-content>
+                    </mat-card>
+                    <br>
+                </ng-container>
+                <hr>
+                <ng-container formArrayName="proxyProperties" *ngIf="isProxy">
+                    <mat-card *ngFor="let prop of proxyProperties.controls; let i = index;" [formGroupName]="i" >
+                        <mat-card-content>
+                            <h6 style="height: 100%; width: 100%; text-align: center; padding-top: 1%; background-color: #bababa; color: #2b2b2b; border: 1px solid #2b2b2b;" >
+                                You have been nominated to act as a Proxy on behalf of {{ primaryMember.name }}, CPR: {{ primaryMember.cprno}}.
+                            </h6>
+                            <mat-tab-group>
+                                <mat-tab label="Details">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Unit Number</mat-label>
+                                                        <input type="text" formControlName="pHFNo" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Title Deed</mat-label>
+                                                        <input type="text" formControlName="pParcelNo" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Plot Number</mat-label>
+                                                        <input type="text" formControlName="pPlotNo" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Plot Area</mat-label>
+                                                        <input type="text" formControlName="pPlotArea" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Built Up Area</mat-label>
+                                                        <input type="text" formControlName="pBuiltUpArea" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Total Area</mat-label>
+                                                        <input type="text" formControlName="pTotalArea" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Zone</mat-label>
+                                                        <input type="text" formControlName="pZone" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Vote Weightage</mat-label>
+                                                        <input type="text" formControlName="pVoteWeightage" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-4">
+                                                    <mat-form-field class="full-width"> 
+                                                        <mat-label>Eligibility</mat-label>
+                                                        <input type="text" formControlName="pEligibity" matInput readonly>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-divider [vertical]="true"></mat-divider>
+                                        <div class="col">
+                                            <div class="col-12">
+                                                <mat-form-field class="full-width"> 
+                                                    <mat-label>Rooms</mat-label>
+                                                    <input type="text" formControlName="pRooms" matInput readonly>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12">
+                                                <mat-form-field class="full-width"> 
+                                                    <mat-label>Bathrooms</mat-label>
+                                                    <input type="text" formControlName="pBathrooms" matInput readonly>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12">
+                                                <mat-form-field class="full-width"> 
+                                                    <mat-label>Car Park Slots</mat-label>
+                                                    <input type="text" formControlName="pCarParkSlots" matInput readonly>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="Documents">
+                                    <br>
+                                    <ng-container formArrayName="pDocuments">
+                                        <div class="row">
+                                            <div class="col-4" *ngFor="let doc of proxyDocuments(i).controls; let j = index" [formGroupName]="j">
+                                                <mat-card>
+                                                    <mat-card-content>
+                                                        <div class="row">
+                                                            <div class="col-9">
+                                                                <mat-form-field class="full-width"> 
+                                                                    <mat-label>Name</mat-label>
+                                                                    <input type="text" formControlName="pDocumentSource" matInput>
+                                                                </mat-form-field>                                                       
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <button class="btn-success btn text-white btn-block" title="View document" (click)="goToLink(proxyDocuments(i).at(j).value.pDocumentUrl)">
+                                                                    <mat-icon>arrow_right</mat-icon> 
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                             <pdf-viewer [src]="proxyDocuments(i).at(j).value.pDocumentUrl" [original-size]="false" style="height: 100%; width: 100%;"></pdf-viewer>
+                                                        </div>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </mat-tab>
+                            </mat-tab-group>                        
+                        </mat-card-content>
+                    </mat-card>
+                    <br>
+                </ng-container>
+            </form>
+        </div>
+    </div>
+</div>

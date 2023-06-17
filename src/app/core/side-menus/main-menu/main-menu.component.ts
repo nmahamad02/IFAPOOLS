@@ -9,7 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainMenuComponent implements OnInit {
 
+  uC = JSON.parse(localStorage.getItem('userclass'));
+  showCRM = false;
+  showVoting = false;
+
   constructor() {
+    if (this.uC === 1) {
+      this.showCRM = true;
+    } else {
+      this.showVoting = true;
+    }
   }
 
   ngOnInit() {

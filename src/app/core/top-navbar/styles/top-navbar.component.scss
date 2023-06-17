@@ -61,7 +61,7 @@
     } // .navbar-controls
 
     .navbar-search {
-      width: 50%;
+      width: 100%;
 
       .search-input {
         font-family: Nunito;
@@ -87,6 +87,7 @@
 
     .navbar-actions {
       height: var(--top-navbar-controls-height);
+      width: 100%;
       margin-inline-start: auto;
       display: flex;
       align-items: left;

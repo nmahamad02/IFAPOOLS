@@ -9,8 +9,10 @@
         <button class="btn toggle-sidenav-btn" type="button" (click)="toggleMainMenu()">
           <i class="fa fa-bars"></i>
         </button>
-        <button type="button" class="btn toggle-sidenav-btn" [routerLink]="['/home/dashboard']">
-          <img src="../../../assets/pics/favicon.png" style="height: 7.5%; width: 7.5%; padding: 10px;"> IFAGATE - Floating City Amwaj Owners Association Voting Portal
+        <button type="button btn-block" class="btn toggle-sidenav-btn text-danger">
+          <marquee>
+             Floating City Amwaj Owners Association Portal
+          </marquee>
         </button>
       </div>
       <div class="navbar-user">
@@ -50,22 +52,24 @@
         <button class="btn toggle-sidenav-btn" type="button" (click)="toggleMainMenu()">
           <i class="fa fa-bars"></i>
         </button>
-        <button type="button" class="btn toggle-sidenav-btn" [routerLink]="['/home/dashboard']" style="float: left;">
-          <img src="../../../assets/pics/favicon.png" style="height: 7.5%; width: 7.5%; padding: 10px;"> IFAGATE - Floating City Amwaj Owners Association Voting Portal
-        </button>
+        
       </div>
       <div class="navbar-controls">
-        <p></p>
-        <!--
           <div class="navbar-search d-none d-md-block">
-            <input class="search-input form-control form-control-lg" type="text" placeholder="Search">
+            <p></p>
+            <!--<input class="search-input form-control form-control-lg" type="text" placeholder="Search">-->
           </div>
-        -->
         <div class="navbar-actions">
-          <!--
+          <button type="button btn-block" class="btn toggle-sidenav-btn text-danger">
+            <marquee>
+              <img src="../../../../assets/pics/favicon.png" style="height: 0%; width: 0%; " >
+               Floating City Amwaj Owners Association Portal
+            </marquee>
+          </button>           
           <button type="button" class="action-button btn btn-link" (click)="toggleNotificationsMenu()">
             <mat-icon class="navbar-icons" svgIcon="notifications"></mat-icon>
           </button>
+          <!--
           <button type="button" class="action-button btn btn-link" (click)="toggleSettingsMenu()">
             <mat-icon class="navbar-icons" svgIcon="settings"></mat-icon>
           </button>
@@ -73,6 +77,7 @@
         </div>
         
         <div class="navbar-user"> 
+          <p></p>
           <!--
           <div class="user-image-wrapper">
             <cc-aspect-ratio [ratio]="{w: 1, h: 1}">
@@ -87,7 +92,7 @@
                 <cc-text-shell [data]="(loggedUser?.name) ? loggedUser?.name.concat(' ').concat(loggedUser?.lastname) : null"></cc-text-shell>
               </span>
               -->
-              <span class="user-name">
+              <span class="user-name" style="color: blue;">
                 <cc-text-shell data="{{ fN }} {{ lN }}"></cc-text-shell>
               </span>
             </button>

@@ -3,26 +3,6 @@
     height: 40%;
 }
 
-/* Structure */
-table {
+mat-form-field {
   width: 100%;
 }
-
-.mat-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-  
-
-.highlight{
-  background: lightgray;
-}
-
-tr:focus{
-  outline: none;
-}
-
-.container {
-  color: darkblue; 
-  background:rgb(251, 252, 249);
-  }

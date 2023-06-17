@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class AuthenticationService {
-  private url = 'http://15.185.46.105:5000/api/user';
+  private url = 'http://15.185.46.105:5030/api/user';
 
   loggedUserSubject: BehaviorSubject<LoggedUserModel>;
   loggedUser: LoggedUserModel;
@@ -23,13 +23,14 @@ export class AuthenticationService {
   }
 
   // tslint:disable-next-line:max-line-length
-  setUser(firstname: string, lastname: string, userclass: string) {
+  setUser(userid: string, firstname: string, lastname: string, userclass: string) {
     // this sets a default user for the template
     this.loggedUser = new LoggedUserModel();
     this.loggedUser.firstname = firstname;
     this.loggedUser.lastname = lastname;
     //this.loggedUser.image = image;
     this.loggedUser.userclass = userclass;
+    localStorage.setItem('userid', JSON.stringify(userid));
     localStorage.setItem('firstname', JSON.stringify(firstname));
     localStorage.setItem('lastname', JSON.stringify(lastname));
     localStorage.setItem('userclass', JSON.stringify(userclass));
@@ -44,8 +45,8 @@ export class AuthenticationService {
     return this.http.get(this.url + '/roles/' + userclass)
   }
 
-  signin(firstname: string, lastname: string, userclass: string): Observable<any> {
-    this.setUser(firstname, lastname, userclass);
+  signin(usercode: string, firstname: string, lastname: string, userclass: string): Observable<any> {
+    this.setUser(usercode,firstname, lastname, userclass);
     // your log in logic should go here
     this.loggedUserSubject.next(this.loggedUser);
     return of(true);

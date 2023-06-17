@@ -2,10 +2,80 @@
     <div class="row no-gutters">
         <div class="visualization-heading col-12">
             <div class="heading-info">
-                <h2 class="heading-title">Voting Overview</h2>
+                <h2 class="heading-title">Dashboard</h2>
                 <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Total Number of Members</th>
+                                    <td>{{ mMemCount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Registered Members</th>
+                                    <td>{{ mRegMemCount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Unregistered Members</th>
+                                    <td>{{ mUnRegMemCount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Proxy Members</th>
+                                    <td>{{ mProxMemCount }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <div class="chart-wrapper" >
+                            <h6>Members</h6>
+                            <canvas baseChart #baseChart 
+                            [data]="pieChart1Data" 
+                            [labels]="pieChart1Labels" 
+                            [chartType]="pieChartType"
+                            [options]="pieChartOptions"
+                            [plugins]="pieChartPlugins"
+                            [legend]="pieChartLegend">
+                          </canvas>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Total Number of Properties</th>
+                                    <td>{{ mPropCount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Registered Properties</th>
+                                    <td>{{ mRegPropCount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Unregistered Properties</th>
+                                    <td>{{ mUnRegPropCount }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <div class="chart-wrapper" >
+                            <h6>Properties</h6>
+                            <canvas baseChart #baseChart 
+                            [data]="pieChart2Data" 
+                            [labels]="pieChart2Labels" 
+                            [chartType]="pieChartType"
+                            [options]="pieChartOptions"
+                            [plugins]="pieChartPlugins"
+                            [legend]="pieChartLegend">
+                          </canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    
+    </div>    
 </div>

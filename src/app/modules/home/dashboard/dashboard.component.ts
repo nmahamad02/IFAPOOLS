@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
-import { ReportsService } from 'src/app/services/reports/reports.service';
+import { ChartType, ChartOptions } from 'chart.js';
+import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, BaseChartDirective } from 'ng2-charts';
+import { CrmService } from 'src/app/services/crm/crm.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,150 +10,78 @@ import { ReportsService } from 'src/app/services/reports/reports.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  /*chartData = [
-    {
-      data: [330, 600, 260, 700],
-      label: 'Account A'
-    },
-    {
-      data: [120, 455, 100, 340],
-      label: 'Account B'
-    },
-    {
-      data: [45, 67, 800, 500],
-      label: 'Account C'
-    }
-  ];
+  @ViewChild("baseChart", {static: false}) chart: BaseChartDirective;
 
-  chartLabels = [
-    'January',
-    'February',
-    'March',
-    'April'
-  ];*/
-
-  agrChartData: any[] = [];
-  memChartData: any[] = [];
-  invChartData: any[] = [];
-  rvcChartData: any[] = [];
-  yearChartLabels: any[] = [
-    'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
-  ];
-  membChartLabels: any[] = [
-    'Corporate Members',
-    'Family Members',
-    'Single Members', 
-  ];
-
-  chartOptions = {
-    responsive: true
-  };
-
-  constructor(private reportsService: ReportsService) { }
+  mRegMemCount: number = 0
+  mUnRegMemCount: number = 0
+  mMemCount: number = 0
+  mProxMemCount: number = 0
+  mPropCount: number = 0
+  mRegPropCount: number = 0;
+  mUnRegPropCount: number = 0
 
   ngOnInit() {
-    this.getAgrData();
-    this.getMemData();
-    this.getInvData();
-    this.getRvcData();
+
   }
 
-  getAgrData() {
-    this.reportsService.getyearLyExpiringAgreements().subscribe((res: any) => {
-      var dataArr = [
-        res.recordset[0].JAN, 
-        res.recordset[0].FEB, 
-        res.recordset[0].MAR, 
-        res.recordset[0].APR, 
-        res.recordset[0].MAY, 
-        res.recordset[0].JUN, 
-        res.recordset[0].JUL,
-        res.recordset[0].AUG,
-        res.recordset[0].SEP,
-        res.recordset[0].OCT,
-        res.recordset[0].NOV,
-        res.recordset[0].DEC
-      ];
-      this.agrChartData = [
-        {
-          data: dataArr,
-          label: 'Expiring agreements'
-        }
-      ]
-    }, (err: any) => {
-      console.log(err);
-    })
+  ngAfterViewInit() {
+    this.getData();
   }
-  
-  getMemData() {
-    this.reportsService.getmemberTypesChart().subscribe((res: any) => {
-      this.memChartData = [
-        {
-          data: [
-            res.recordset[0].countcorporate, 
-            res.recordset[0].countfamily,
-            res.recordset[0].countsingle
-          ]
-        }
-      ]
-    }, (err: any) => {
-      console.log(err);
-    })
+   
+  constructor(private crmService: CrmService) {
+    monkeyPatchChartJsTooltip();
+    monkeyPatchChartJsLegend();
   }
-  
-  getInvData() {
-    this.reportsService.getyearlyInvoices().subscribe((res: any) => {
-      var dataArr = [
-        res.recordset[0].JAN, 
-        res.recordset[0].FEB, 
-        res.recordset[0].MAR, 
-        res.recordset[0].APR, 
-        res.recordset[0].MAY, 
-        res.recordset[0].JUN, 
-        res.recordset[0].JUL,
-        res.recordset[0].AUG,
-        res.recordset[0].SEP,
-        res.recordset[0].OCT,
-        res.recordset[0].NOV,
-        res.recordset[0].DEC
-      ];
-      this.invChartData = [
-        {
-          data: dataArr,
-          label: 'Invoice Amount'
-        }
-      ]
+
+  public pieChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public pieChart1Labels: Label[] = ['Registered Members', 'Unregistered Members', 'Proxy Members'];
+  public pieChart1Data: SingleDataSet  = [this.mRegMemCount, this.mUnRegMemCount, this.mProxMemCount]
+  public pieChart2Labels: Label[] = ['Registered Properties', 'Unregistered Properties'];
+  public pieChart2Data: SingleDataSet  = [this.mRegPropCount, this.mUnRegPropCount]
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
+  public pieChartPlugins = [];
+
+  getData() {
+    this.crmService.getAllMembers().subscribe((res: any) => {
+      console.log(res)
+      this.mRegMemCount = res.rowsAffected[0]
+      this.crmService.getAllPotentialMembers().subscribe((res: any) => {
+        console.log(res)
+        this.mMemCount = res.recordset[0].COUNT
+        this.mUnRegMemCount = this.mMemCount - this.mRegMemCount;
+        //this.chart.chart.update();
+        this.crmService.getAllProxyMembers().subscribe((res: any) => {
+          console.log(res)
+          this.mProxMemCount = res.recordset[0].COUNT
+          this.pieChart1Data = [this.mRegMemCount, this.mUnRegMemCount, this.mProxMemCount]
+          this.crmService.getAllProperties().subscribe((res: any) => {
+            console.log(res)
+            this.mPropCount = res.rowsAffected[0]
+            this.crmService.getAllPropertyWiseLandlords().subscribe((res: any) => {
+              console.log(res)
+              this.mRegPropCount = res.rowsAffected[0]
+              this.mUnRegPropCount = this.mPropCount - this.mRegPropCount;
+              this.pieChart2Data = [this.mRegPropCount, this.mUnRegPropCount]
+            }, (err: any) => {
+            console.log(err)
+          })
+          }, (err: any) => {
+            console.log(err)
+          }) 
+        }, (err: any) => {
+          console.log(err)
+        })
+      }, (err: any) => {
+        console.log(err)
+      })
     }, (err: any) => {
-      console.log(err);
-    })
-  }
-  
-  getRvcData() {
-    this.reportsService.getyearlyReceipts().subscribe((res: any) => {
-      var dataArr = [
-        res.recordset[0].JAN, 
-        res.recordset[0].FEB, 
-        res.recordset[0].MAR, 
-        res.recordset[0].APR, 
-        res.recordset[0].MAY, 
-        res.recordset[0].JUN, 
-        res.recordset[0].JUL,
-        res.recordset[0].AUG,
-        res.recordset[0].SEP,
-        res.recordset[0].OCT,
-        res.recordset[0].NOV,
-        res.recordset[0].DEC
-      ];
-      this.rvcChartData = [
-        {
-          data: dataArr,
-          label: 'Recieved Amount'
-        }
-      ]
-    }, (err: any) => {
-      console.log(err);
+      console.log(err)
     })
   }
 
+  
 
 }

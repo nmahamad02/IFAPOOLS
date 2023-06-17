@@ -39,6 +39,14 @@ const routes: Routes = [
         loadChildren: () => import('./modules/crm/crm.module').then(m => m.CrmModule)
       },
       {
+        path: 'voting',
+        loadChildren: () => import('./modules/voting/voting.module').then(m => m.VotingModule)
+      },
+      {
+        path: 'notifications',
+        loadChildren: () => import('./modules/notifications/notifications.module').then(m => m.NotificationsModule)
+      },
+      {
         path: 'home',
         loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
       },

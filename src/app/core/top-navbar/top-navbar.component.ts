@@ -3,7 +3,6 @@ import { SideMenusService } from '../side-menus/side-menus.service';
 import { LoggedUserModel } from 'src/app/modules/authentication/logged-user.model';
 import { AuthenticationService } from 'src/app/modules/authentication/authentication.service';
 import { Router } from '@angular/router';
-import { ReportsService } from 'src/app/services/reports/reports.service';
 import { getTreeNoValidDataSourceError } from '@angular/cdk/tree';
 
 @Component({
@@ -16,8 +15,7 @@ import { getTreeNoValidDataSourceError } from '@angular/cdk/tree';
 export class TopNavbarComponent implements OnInit {
   loggedUser: LoggedUserModel = null;
   
-  message: string = "Welcome to IFAResort - Al Bander Resort.";
-  mes: string = "";
+  message: string = "Welcome to IFAGATE - Floating City Amwaj Owners Association Members Portal.";
 
   fN = JSON.parse(localStorage.getItem('firstname'));
   lN = JSON.parse(localStorage.getItem('lastname'));
@@ -37,7 +35,6 @@ export class TopNavbarComponent implements OnInit {
 
   constructor(
     private sideMenusService: SideMenusService,
-    private reportsService: ReportsService,
     private authenticationService: AuthenticationService,
     private router: Router
   ) {
@@ -50,11 +47,7 @@ export class TopNavbarComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.reportsService.getMembersByType().subscribe((res: any) => {
-      console.log(res);
-      const membData = res.recordset[0];
-      this.mes = `There are ${membData.countcorporate} Corporate Members, ${membData.countfamily} Family Members, ${membData.countdep} Dependent Members, and ${membData.countsingle} Individual Members.`;
-    })
+    
   }
 
   logout() {
