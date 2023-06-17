@@ -32,7 +32,7 @@ export class MembersComponent implements OnInit {
   isMember: string = '';
   isLandlord: string = '';
 
-  constructor(private crmservice: CrmService, private router: Router, private route: ActivatedRoute, private uploadService: UploadService) { 
+  constructor(private crmservice: CrmService, private router: Router, private route: ActivatedRoute, private uploadService: UploadService) {
     this.memberForm = new FormGroup({ 
       cprno: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),

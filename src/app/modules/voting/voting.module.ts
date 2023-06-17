@@ -22,8 +22,13 @@ import { MatSortModule } from "@angular/material/sort";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { MatRadioModule } from '@angular/material/radio';
 import { VotingDetailsComponent } from './voting-details/voting-details.component';
+import { AttendanceComponent } from './attendance/attendance.component';
 
 export const votingRoutes = [
+  {
+    path: 'attendance',
+    component: AttendanceComponent
+  },
   {
     path: 'overview',
     component: VotingOverviewComponent
@@ -39,7 +44,7 @@ export const votingRoutes = [
 ];
 
 @NgModule({
-  declarations: [VotingOverviewComponent, VotingResultsComponent, VotingDetailsComponent],
+  declarations: [VotingOverviewComponent, VotingResultsComponent, VotingDetailsComponent, AttendanceComponent],
   imports: [
     CommonModule,
     ChartsModule,

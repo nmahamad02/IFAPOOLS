@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VotingService } from 'src/app/services/voting/voting.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class VotingDetailsComponent implements OnInit {
 
   uC = JSON.parse(localStorage.getItem('userid'));
 
-  constructor(private route: ActivatedRoute, private VotingService: VotingService) { 
+  constructor(private route: ActivatedRoute, private VotingService: VotingService,  private router: Router) { 
     this.getVotingData()
     this.VotingForm = new FormGroup({ 
       votes: new FormArray([]),
@@ -90,6 +90,7 @@ export class VotingDetailsComponent implements OnInit {
       for(let i=0; i<data.votes.length; i++) {
         this.VotingService.submitVote(this.mYear,this.uC,this.mCat,data.votes[i].vSlNo,this.voteQuestions[i].BLITEM,data.votes[i].vEngDesc,data.votes[i].vAraDesc,data.votes[i].vDecision).subscribe((res: any) => {
           console.log(res)
+          this.gotoVotingOverview();
         }, (err: any) => {
           console.log(err)
         })
@@ -98,6 +99,7 @@ export class VotingDetailsComponent implements OnInit {
       for(let i=0; i<data.votes.length; i++) {
         this.VotingService.updateVote(this.mYear,this.uC,this.mCat,data.votes[i].vSlNo,data.votes[i].vDecision).subscribe((res: any) => {
           console.log(res)
+          this.gotoVotingOverview();
         }, (err: any) => {
           console.log(err)
         })
@@ -113,5 +115,10 @@ export class VotingDetailsComponent implements OnInit {
     return this.VotingForm.get('votes') as FormArray
   }
 
+  public gotoVotingOverview() {
+    var myurl = 'voting/overview';
+    this.router.navigateByUrl(myurl).then(e => {
+    });
+  }
 
 }
