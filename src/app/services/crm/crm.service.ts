@@ -13,10 +13,22 @@ export class CrmService {
 
   getAllMembers() {
     return this.http.get(this.url + '/members')
-  }  
+  }    
   
+  upDateMemberDate() {
+    return this.http.get(this.url + '/update/member/date')
+  }  
+
   getMemberFromCPR(cprno: string) {
     return this.http.get(this.url + '/member/' + cprno)
+  }  
+
+  getProxyFromCPR(cprno: string) {
+    return this.http.get(this.url + '/proxy/' + cprno)
+  }    
+  
+  checkProxy(cprno: string) {
+    return this.http.get(this.url + '/proxy/check/' + cprno)
   }  
 
   postMember(Mid: string, MemberNo: string, REFMEMBNO: string, NAME: string, MEMBTYPE: string, ADD1: string, ADD2: string, ADD3: string, TELOFF: string, TELRES: string,Email: string, CPRNo: string,isPrimary: string,image: string, primaryMember: string) {
@@ -141,6 +153,18 @@ export class CrmService {
 
   getAllDocuments(memberno: string, houseno: string) {
     return this.http.get(this.url + '/document/' + memberno + '/' + houseno)
+  }  
+  
+  checkCprDoc(membno: string) {
+    return this.http.get(this.url + '/document/check/cpr/' + membno)
+  }  
+  
+  checkTitleDeedDoc(membno: string) {
+    return this.http.get(this.url + '/document/check/titleDeed/' + membno)
+  }  
+  
+  checkProxyDoc(membno: string) {
+    return this.http.get(this.url + '/document/check/proxy/' + membno)
   }
 
   addNewDocument(memberno: string, houseno: string, documentname: string, documenttype: string) {

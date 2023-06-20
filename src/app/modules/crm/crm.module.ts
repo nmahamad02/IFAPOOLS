@@ -34,11 +34,11 @@ export const crmRoutes = [
     component: UnitsComponent
   },
   {
-    path: 'member-list',
+    path: 'owner-list',
     component: MemberListComponent
   },
   {
-    path: 'member/details/:id',
+    path: 'owner/details/:id',
     component: MembersComponent
   },
 ];

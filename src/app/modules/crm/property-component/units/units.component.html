@@ -4,7 +4,7 @@
             <div class="heading-info">
                 <div class="row">
                     <div class="col-9">
-                        <h2 class="heading-title">Property Details</h2>
+                        <h2 class="heading-title">PROPERTY DETAILS</h2>
                     </div>
                     <div class="col-3">
                         <div class="row">
@@ -203,6 +203,18 @@
                                                             <mat-form-field class="full-width"> 
                                                                 <mat-label>Name</mat-label>
                                                                 <input type="text" formControlName="pDocumentSource" matInput>
+                                                            </mat-form-field>                                                       
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <mat-form-field class="full-width"> 
+                                                                <mat-select formControlName="pDocumentType">
+                                                                    <mat-option> ----- </mat-option>
+                                                                    <mat-option value="CPR">CPR</mat-option>
+                                                                    <mat-option value="TITLE DEED">Title Deed</mat-option>
+                                                                    <mat-option value="REGISTRATION">Registration Form</mat-option>
+                                                                    <mat-option value="PROXY">Proxy Form</mat-option>
+                                                                    <mat-option value="RECEIPT">Payment Receipt</mat-option>
+                                                                </mat-select>
                                                             </mat-form-field>                                                       
                                                         </div>
                                                         <div class="col-12">

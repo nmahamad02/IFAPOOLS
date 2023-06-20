@@ -26,7 +26,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
 
 export const votingRoutes = [
   {
-    path: 'attendance',
+    path: 'registry',
     component: AttendanceComponent
   },
   {

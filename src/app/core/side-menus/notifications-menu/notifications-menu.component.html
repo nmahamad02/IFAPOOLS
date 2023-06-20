@@ -25,6 +25,22 @@
   </li>
 </ul>
 
+<ul class="notifications-list list-group list-group-flush" *ngIf="showVoting">
+  <li class="notification-item list-group-item" *ngFor="let prox of proxArr; let i = index">
+    <div class="notification-info">
+      <span class="notification-message">You have been nominated to act as a proxy on behalf of:</span>
+      <span class="user-name">Name: {{ prox.membName }}<br>CPR Number: {{ prox.membNo }}</span>
+    </div>
+  </li>
+  <li class="notification-item list-group-item" *ngFor="let msg of message; let i = index">
+    <div class="notification-info">
+      <span class="user-name">Voting Status:</span>
+      <span class="notification-message">{{ msg.msg }} </span>
+      <button class="btn btn-secondary btn-sm" style="float: right;" (click)="gotoVotingDetails('/voting/details',msg.category,msg.year)">Click here to cast your vote</button>
+    </div>
+  </li>
+</ul>
+
 <!--<ul class="notifications-list list-group list-group-flush" *ngIf="showVoting">
   <li class="notification-item list-group-item">
     <div class="notification-info">

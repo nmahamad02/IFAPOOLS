@@ -39,6 +39,14 @@ export class MemberListComponent implements OnInit {
     this.memberListDataSource.filter = this.searchValue.trim().toLowerCase();
   }
 
+  updateMemberDate() {
+    this.crmservice.upDateMemberDate().subscribe((res: any) => {
+      console.log(res)
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
+
   public gotoMemberDetails(url, id) {
     var myurl = `${url}/${id}`;
     this.router.navigateByUrl(myurl).then(e => {

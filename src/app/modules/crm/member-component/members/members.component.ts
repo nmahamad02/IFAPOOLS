@@ -212,7 +212,7 @@ export class MembersComponent implements OnInit {
           console.log(resp);
           if(data.memberType!='O') {
             for(let i=0; i<data.dependentMembers.length; i++) {
-              this.crmservice.updateMember(data.dependentMembers[i].dcprno,data.dependentMembers[i].dcprno,data.dependentMembers[i].dcprno,data.dependentMembers[i].dname,data.memberType,data.dependentMembers[i].add1,data.dependentMembers[i].add2,data.dependentMembers[i].add3,data.dependentMembers[i].mobile,data.dependentMembers[i].mobile,data.dependentMembers[i].email,data.cprno,'N',data.image,data.cprno).subscribe((response: any) => {
+              this.crmservice.postMember(data.dependentMembers[i].dcprno,data.dependentMembers[i].dcprno,data.dependentMembers[i].dcprno,data.dependentMembers[i].dname,data.memberType,data.dependentMembers[i].add1,data.dependentMembers[i].add2,data.dependentMembers[i].add3,data.dependentMembers[i].mobile,data.dependentMembers[i].mobile,data.dependentMembers[i].email,data.cprno,'N',data.image,data.cprno).subscribe((response: any) => {
                 console.log(response);
               }, rreror => {
                 console.log(rreror);

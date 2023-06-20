@@ -106,6 +106,7 @@ export class UnitsComponent implements OnInit {
                   const docUrl = "https://ifamygate-floatingcity.s3.me-south-1.amazonaws.com/documents/" + docArr[j].DOCUMENTNAME
                   const document = new FormGroup({
                     pDocumentSource: new FormControl(docArr[j].DOCUMENTNAME, []),
+                    pDocumentType: new FormControl(docArr[j].DOCUMENTTYPE, []),
                     pDocumentUrl: new FormControl(docUrl, [])
                   });
                   this.proxyDocuments(i).push(document)
@@ -167,6 +168,7 @@ export class UnitsComponent implements OnInit {
                   const docUrl = "https://ifamygate-floatingcity.s3.me-south-1.amazonaws.com/documents/" + docArr[j].DOCUMENTNAME
                   const document = new FormGroup({
                     pDocumentSource: new FormControl(docArr[j].DOCUMENTNAME, []),
+                    pDocumentType: new FormControl(docArr[j].DOCUMENTTYPE, []),
                     pDocumentUrl: new FormControl(docUrl, [])
                   });
                   this.documents(i).push(document)
@@ -186,7 +188,7 @@ export class UnitsComponent implements OnInit {
     for(let i=0; i<data.properties.length; i++) {
       for(let j=0; j<data.properties[i].pDocuments.length; j++) {
         this.uploadService.uploadDoc(data.properties[i].pDocuments[j].pDocument)
-        this.crmservice.addNewDocument(data.cprno,data.properties[i].pHFNo,data.properties[i].pDocuments[j].pDocumentSource,'info').subscribe((res: any) => {
+        this.crmservice.addNewDocument(data.cprno,data.properties[i].pHFNo,data.properties[i].pDocuments[j].pDocumentSource,data.properties[i].pDocuments[j].pDocumentType).subscribe((res: any) => {
           console.log(res)
         }, (err: any) => {
           console.log(err)
@@ -258,6 +260,7 @@ export class UnitsComponent implements OnInit {
       pDocument: new FormControl('', []),
       pDocumentSrc: new FormControl('', []),
       pDocumentSource: new FormControl('', []),
+      pDocumentType: new FormControl('', []),      
       pDocumentUrl: new FormControl('', [])
     });
     this.documents(propIndex).push(document)
@@ -283,6 +286,7 @@ export class UnitsComponent implements OnInit {
             pDocument: new FormControl(fileToUpload, []),
             pDocumentSrc: new FormControl(reader.result as String, []),
             pDocumentSource: new FormControl(fileNm, []),
+            pDocumentType: new FormControl('', []),      
             pDocumentUrl: new FormControl(docUrl, [])
           });
           this.documents(propIndex).push(document)

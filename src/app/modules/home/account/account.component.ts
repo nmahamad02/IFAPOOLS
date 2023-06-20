@@ -117,7 +117,7 @@ export class AccountComponent implements OnInit {
               this.proxyProperties.push(prop);
             }
           })
-        } else if(this.membArr[i].MEMBTYPE === 'O') {
+        } else if((this.membArr[i].MEMBTYPE === 'O') || (this.membArr[i].MEMBTYPE === 'A')) {
           this.isOwner = true;
           this.crmservice.getLandlordWiseProperties(cprno).subscribe((res: any) => {
             console.log(res);

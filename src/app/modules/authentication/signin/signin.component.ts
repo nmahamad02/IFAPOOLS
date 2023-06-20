@@ -41,13 +41,11 @@ export class SigninComponent implements OnInit {
     else {
       this.loading = true;
       //this.encrypt(data.password);
-    
       this.authenticationService.checkUser(data.username).subscribe ((res: any) => {
         console.log(res.recordset[0]);
         if(data.password === res.recordset[0].PASSWORD) {
           this.error = "";
           // if signin success then:
-          
           this.authenticationService.signin(res.recordset[0].USERCODE, res.recordset[0].FIRSTNAME, res.recordset[0].LASTNAME, res.recordset[0].USERCLASS).subscribe((res: any) => {
             this.router.navigate(['home/dashboard']);
           })
