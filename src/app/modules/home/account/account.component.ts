@@ -61,23 +61,34 @@ export class AccountComponent implements OnInit {
           this.crmservice.getLandlordWiseProperties(primaryMemberCPR).subscribe((res: any) => {
             console.log(res);
             this.proxArr=res.recordset;
+            this.propertyForm.patchValue({
+              cprno: this.membArr[0].MemberNo,
+              name: this.membArr[0].NAME,
+              add1: this.membArr[0].ADD1,
+              add2: this.membArr[0].ADD2,
+              add3: this.membArr[0].ADD3, 
+              phone1: this.membArr[0].TELOFF,
+              phone2: this.membArr[0].TELRES,
+              mobile: this.membArr[0].TELOFF,
+              email: this.membArr[0].Email,
+            })
             this.primaryMember = {
-              cprno: this.proxArr[0].memberno,
-              name: this.proxArr[0].name,
-              add1: this.proxArr[0].landlord_add1,
-              add2: this.proxArr[0].landlord_Add2,
-              add3: this.proxArr[0].landlord_Add3, 
-              phone1: this.proxArr[0].landlord_phone1,
-              phone2: this.proxArr[0].landlord_phone1,
-              mobile: this.proxArr[0].landlord_mobile,
-              email: this.proxArr[0].landlord_email_id,
+              cprno: this.membArr[0].MemberNo,
+              name: this.membArr[0].NAME,
+              add1: this.membArr[0].ADD1,
+              add2: this.membArr[0].ADD2,
+              add3: this.membArr[0].ADD3, 
+              phone1: this.membArr[0].TELOFF,
+              phone2: this.membArr[0].TELRES,
+              mobile: this.membArr[0].TELOFF,
+              email: this.membArr[0].Email,
             }
-            console.log(this.proxArr[0].imagename);
-            var imgVal: string = this.proxArr[0].imagename;
-            if ((this.proxArr[0].imagename === null) || (this.proxArr[0].imagename === "")) {
+            console.log(this.membArr[0].imagename);
+            var imgVal: string = this.membArr[0].imagename;
+            if ((this.membArr[0].imagename === null) || (this.membArr[0].imagename === "")) {
               this.imageSrc = "https://ifamygate-floatingcity.s3.me-south-1.amazonaws.com/images/imgNaN.png";
-            } else if (this.proxArr[0].imagename != null) {
-              console.log(this.proxArr[0].imagename);
+            } else if (this.membArr[0].imagename != null) {
+              console.log(this.membArr[0].imagename);
               if (imgVal.includes("fakepath")) {
                 var imgName: string = imgVal.slice(12);
                 console.log(imgName);

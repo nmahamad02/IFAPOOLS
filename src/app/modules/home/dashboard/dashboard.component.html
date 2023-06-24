@@ -7,6 +7,33 @@
             <hr>
             <div class="row">
                 <div class="col-6">
+                    <div class="chart-wrapper" >
+                        <h6>Voters</h6>
+                        <canvas baseChart #baseChart [data]="pieChart3Data" [labels]="pieChart3Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                            <tr>
+                                <th>Total Number of Registered Members</th>
+                                <td>{{ mVoterElectorate }}</td>
+                            </tr>
+                            <tr>
+                                <th>Members who have voted</th>
+                                <td>{{ mVotedMembers }}</td>
+                            </tr>
+                            <tr>
+                                <th>Members who have yet to vote</th>
+                                <td>{{ mNotVotedMembers }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-6">
                     <table class="table table-striped table-hover">
                         <tbody>
                             <tr>
@@ -35,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <hr>
+            <hr>            
             <div class="row">
                 <div class="col-6">
                     <div class="chart-wrapper" >
@@ -60,6 +87,16 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <hr>
+            <div class="col-12">
+                <h6 class="heading-title">How to use the FC Portal?</h6>
+                <div class="video">
+                    <video controls #videoPlayer style="width: 100%;">
+                        <source src="{{videoSource}}" type="video/mp4" />
+                        Browser not supported
+                    </video>
                 </div>
             </div>
         </div>

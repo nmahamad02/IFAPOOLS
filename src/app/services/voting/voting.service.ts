@@ -23,6 +23,10 @@ export class VotingService {
 
   getVotingQuestionWiseResults(category: string) {
     return this.http.get(this.url + '/voting/results/' + category)
+  }    
+  
+  checkVotingNumber() {
+    return this.http.get(this.url + '/voting/number')
   }  
 
   checkVotingStatus(membno: string, category: string, year: string) {

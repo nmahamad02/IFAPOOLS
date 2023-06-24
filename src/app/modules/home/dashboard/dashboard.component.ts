@@ -3,6 +3,7 @@ import { ChartConfiguration } from 'chart.js';
 import { ChartType, ChartOptions } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, BaseChartDirective } from 'ng2-charts';
 import { CrmService } from 'src/app/services/crm/crm.service';
+import { VotingService } from 'src/app/services/voting/voting.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +20,11 @@ export class DashboardComponent implements OnInit {
   mPropCount: number = 0
   mRegPropCount: number = 0;
   mUnRegPropCount: number = 0
+  mVoterElectorate: number = 0;
+  mVotedMembers: number = 0;
+  mNotVotedMembers: number = 0;
+
+  videoSource = "https://ifamygate-floatingcity.s3.me-south-1.amazonaws.com/information/FC-Walkthrough.mov"
 
   ngOnInit() {
 
@@ -28,7 +34,7 @@ export class DashboardComponent implements OnInit {
     this.getData();
   }
    
-  constructor(private crmService: CrmService) {
+  constructor(private crmService: CrmService, private votingService: VotingService) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
@@ -38,6 +44,8 @@ export class DashboardComponent implements OnInit {
   };
   public pieChart1Labels: Label[] = ['Registered Members', 'Unregistered Members', 'Proxy Members'];
   public pieChart1Data: SingleDataSet  = [this.mRegMemCount, this.mUnRegMemCount, this.mProxMemCount]
+  public pieChart3Labels: Label[] = ['Registered Members', 'Members Voted', 'Members who did not vote'];
+  public pieChart3Data: SingleDataSet  = [this.mVoterElectorate, this.mVotedMembers, this.mNotVotedMembers]
   public pieChart2Labels: Label[] = ['Registered Properties', 'Unregistered Properties'];
   public pieChart2Data: SingleDataSet  = [this.mRegPropCount, this.mUnRegPropCount]
   public pieChartType: ChartType = 'pie';
@@ -65,6 +73,12 @@ export class DashboardComponent implements OnInit {
               this.mRegPropCount = res.rowsAffected[0]
               this.mUnRegPropCount = this.mPropCount - this.mRegPropCount;
               this.pieChart2Data = [this.mRegPropCount, this.mUnRegPropCount]
+              this.votingService.checkVotingNumber().subscribe((res: any) => {
+                this.mVoterElectorate = this.mRegMemCount
+                this.mVotedMembers = res.recordset[0].VOTERS
+                this.mNotVotedMembers = this.mVoterElectorate - this.mVotedMembers
+                this.pieChart3Data = [this.mVoterElectorate, this.mVotedMembers, this.mNotVotedMembers]
+              })
             }, (err: any) => {
             console.log(err)
           })
