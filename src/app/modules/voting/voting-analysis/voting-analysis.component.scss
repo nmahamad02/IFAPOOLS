@@ -7,6 +7,20 @@ mat-form-field {
   width: 100%;
 }
 
+/* Structure */
+table {
+  width: 100%;
+}
+
+
+
+.highlight{
+  background: lightgray;
+}
+
+tr:focus{
+  outline: none;
+}
 
 .container-fluid {
   color: darkblue; 

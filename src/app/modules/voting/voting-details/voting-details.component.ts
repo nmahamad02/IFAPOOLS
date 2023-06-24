@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataSharingService } from 'src/app/services/data-sharing/data-sharing.service';
 import { VotingService } from 'src/app/services/voting/voting.service';
 
 @Component({
@@ -12,17 +13,18 @@ export class VotingDetailsComponent implements OnInit {
   mCat = this.route.snapshot.params.category
   mYear = this.route.snapshot.params.year
   mMode = ""
+  mMembData: any;
   voteQuestions: any = [];
 
   VotingForm: FormGroup;
 
   uC = JSON.parse(localStorage.getItem('userid'));
 
-  constructor(private route: ActivatedRoute, private VotingService: VotingService,  private router: Router) { 
-    this.getVotingData()
+  constructor(private route: ActivatedRoute, private VotingService: VotingService,  private router: Router, private datasharingservice: DataSharingService) { 
     this.VotingForm = new FormGroup({ 
       votes: new FormArray([]),
     });
+    this.getVotingData()
   }
 
   ngOnInit() {
@@ -31,7 +33,9 @@ export class VotingDetailsComponent implements OnInit {
   }
 
   getVotingData() {
-    this.VotingService.checkVotingStatus(this.uC,this.mCat,String(this.mYear)).subscribe((res: any) => {
+    this.mMembData = this.datasharingservice.getData()
+    console.log( this.mMembData)
+    this.VotingService.checkVotingStatus(this.mMembData.membno,this.mCat,String(this.mYear)).subscribe((res: any) => {
       console.log(res)
       if(res.recordset.length === 0) {
         console.log("Voter not voted yet")
@@ -88,7 +92,7 @@ export class VotingDetailsComponent implements OnInit {
     console.log(data)
     if(this.mMode === "I") {
       for(let i=0; i<data.votes.length; i++) {
-        this.VotingService.submitVote(this.mYear,this.uC,this.mCat,data.votes[i].vSlNo,this.voteQuestions[i].BLITEM,data.votes[i].vEngDesc,data.votes[i].vAraDesc,data.votes[i].vDecision).subscribe((res: any) => {
+       this.VotingService.submitVote(this.mYear,this.mMembData.membno,this.mCat,data.votes[i].vSlNo,this.voteQuestions[i].BLITEM,data.votes[i].vEngDesc,data.votes[i].vAraDesc,data.votes[i].vDecision,this.uC,this.mMembData.membtype).subscribe((res: any) => {
           console.log(res)
           this.gotoVotingOverview();
         }, (err: any) => {
@@ -97,7 +101,7 @@ export class VotingDetailsComponent implements OnInit {
       }
     } else if (this.mMode === "U") {
       for(let i=0; i<data.votes.length; i++) {
-        this.VotingService.updateVote(this.mYear,this.uC,this.mCat,data.votes[i].vSlNo,data.votes[i].vDecision).subscribe((res: any) => {
+        this.VotingService.updateVote(this.mYear,this.mMembData.membno,this.mCat,data.votes[i].vSlNo,data.votes[i].vDecision).subscribe((res: any) => {
           console.log(res)
           this.gotoVotingOverview();
         }, (err: any) => {

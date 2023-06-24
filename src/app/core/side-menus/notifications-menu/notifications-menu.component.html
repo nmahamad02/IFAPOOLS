@@ -36,7 +36,7 @@
     <div class="notification-info">
       <span class="user-name">Voting Status:</span>
       <span class="notification-message">{{ msg.msg }} </span>
-      <button class="btn btn-secondary btn-sm" style="float: right;" (click)="gotoVotingDetails('/voting/details',msg.category,msg.year)">Click here to cast your vote</button>
+      <button class="btn btn-secondary btn-sm" style="float: right;" [routerLink]="['/voting/overview']">Click here to cast your vote</button>
     </div>
   </li>
 </ul>

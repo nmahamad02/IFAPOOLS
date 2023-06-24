@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row no-gutters">
         <div class="visualization-heading col-12">
             <div class="heading-info row">
                 <div class="col-10">
-                    <h2 class="heading-title">{{ mCat }} VOTING - {{ mYear }}</h2>
+                    <h2 class="heading-title">{{ mCat }} Voting - {{ mYear }}</h2>
                 </div>
                 <div class="col-2">
                     <button mat-raised-button class="bg-warning text-white btn btn-block" [routerLink]="['/voting/overview']" style="float: right;">
@@ -12,8 +12,9 @@
                 </div>
             </div>
             <hr>
-            <div class="row">
-               <h6>Please read through the following set of questions and make sure to cast your vote accordingly. Your votes will be recorded and tallied as soon as the alloted time has elapsed, and the results can be viewed in the Results page.</h6>
+            <div class="row container-fluid">
+                <h6>You are now voting on behalf of {{ mMembData.membname }}, CPR: {{ mMembData.membno }}</h6>
+                <h6>Please read through the following set of questions and make sure to cast your vote accordingly. Your votes will be recorded and tallied as soon as the alloted time has elapsed, and the results can be viewed in the Results page.</h6>
             </div>
             <br>
             <form class="form-container" [formGroup]="VotingForm">

@@ -17,14 +17,21 @@ import { MatCardModule} from '@angular/material/card'
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from "@angular/material/sort";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { MatRadioModule } from '@angular/material/radio';
 import { VotingDetailsComponent } from './voting-details/voting-details.component';
 import { AttendanceComponent } from './attendance/attendance.component';
+import { VotingResultsDetailsComponent } from './voting-results-details/voting-results-details.component';
+import { VotingAnalysisComponent } from './voting-analysis/voting-analysis.component';
 
 export const votingRoutes = [
+  {
+    path: 'analysis',
+    component: VotingAnalysisComponent
+  },
   {
     path: 'registry',
     component: AttendanceComponent
@@ -41,10 +48,14 @@ export const votingRoutes = [
     path: 'results',
     component: VotingResultsComponent
   },
+  {
+    path: 'results/details/:category/:year',
+    component: VotingResultsDetailsComponent 
+  },
 ];
 
 @NgModule({
-  declarations: [VotingOverviewComponent, VotingResultsComponent, VotingDetailsComponent, AttendanceComponent],
+  declarations: [VotingOverviewComponent, VotingResultsComponent, VotingDetailsComponent, AttendanceComponent, VotingResultsDetailsComponent, VotingAnalysisComponent],
   imports: [
     CommonModule,
     ChartsModule,
@@ -63,6 +74,7 @@ export const votingRoutes = [
     MatCardModule,
     MatDatepickerModule,
     FormsModule,
+    MatDialogModule,
     ReactiveFormsModule,
 
     RouterModule.forChild(votingRoutes)

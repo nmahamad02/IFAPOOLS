@@ -104,10 +104,4 @@ export class NotificationsMenuComponent implements OnInit {
     })
   }
 
-  public gotoVotingDetails(url, category, year) {
-    var myurl = `${url}/${category}/${year}`;
-    this.router.navigateByUrl(myurl).then(e => {
-    });
-  }
-
 }

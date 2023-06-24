@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { CrmService } from 'src/app/services/crm/crm.service';
 import * as XLSX from "xlsx";
 
@@ -12,7 +13,7 @@ export class AttendanceComponent implements OnInit {
 
   membList: any[] = []
 
-  constructor(private crmService: CrmService) { }
+  constructor(private crmService: CrmService, private router: Router) { }
 
   ngOnInit() {
     this.getData();
@@ -81,7 +82,6 @@ export class AttendanceComponent implements OnInit {
     })
   }
 
-
   fireEvent() {
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(
       this.table.nativeElement
@@ -105,5 +105,11 @@ export class AttendanceComponent implements OnInit {
 
     /* save to file */
     XLSX.writeFile(wb, "SheetJS.xlsx");
+  }
+
+  public gotoPropertyDetails(url, id) {
+    var myurl = `${url}/${id}`;
+    this.router.navigateByUrl(myurl).then(e => {
+    });
   }
 }

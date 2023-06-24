@@ -1,0 +1,119 @@
+<div class="container-fluid">
+    <div class="row no-gutters">
+        <div class="visualization-heading col-12">
+            <div class="heading-info row">
+                <div class="col-10">
+                    <h2 class="heading-title">Voting Analysis</h2>
+                </div>
+            </div>
+            <hr>
+            <div class="col-12">
+                <form class="form-container" [formGroup]="analysisForm">
+                    <div class="row">
+                        <div class="col-3">
+                            <mat-form-field class="full-width"> 
+                                <mat-label>CPR Number</mat-label>
+                                <input type="text" formControlName="cprno" matInput (keydown.f2)="lookUpMembers()">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field class="full-width"> 
+                                <mat-label>Name</mat-label>
+                                <input type="text" formControlName="name" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field class="full-width"> 
+                                <mat-label>Category</mat-label>
+                                <mat-select formControlName="category">
+                                    <mat-option> ----- </mat-option>
+                                    <mat-option value="GENERAL">General Voting</mat-option>
+                                    <mat-option value="BYLAW">Bylaw Voting</mat-option>
+                                </mat-select>
+                            </mat-form-field>     
+                        </div>
+                        <div class="col-3">
+                            <button mat-raised-button class="bg-secondary text-white btn btn-block" (click)="searchMember()" style="float: right;">
+                                <mat-icon>search</mat-icon> Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12">
+                <table #table1 class="table table-striped table-hover table-sm table-bordered" >
+                    <thead>
+                        <tr class="table-reflow" style="background-color: rgb(2, 46, 82); color: white;">
+                            <th style="width: 5%;">
+                                SL NO
+                            </th>
+                            <th style="width: 85%;">
+                                DESCRIPTION
+                            </th>
+                            <th style="width: 5%;">
+                                YES
+                            </th>
+                            <th style="width: 5%;">
+                                NO
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let ques of voteArr; let i = index;">
+                            <td>
+                                {{ ques.BLNO }}
+                            </td>
+                            <td>
+                                {{ ques.BLEDESCRIPTION }}
+                                <hr>
+                                {{ ques.BLADESCRIPTION }}
+                            </td>
+                            <td>
+                                {{ ques.votedYES }}
+                            </td>
+                            <td>
+                                {{ ques.votedNo }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-12">
+                <ng-template #membLookupDialog style="width: 60%;">
+                    <h3 matDialogTitle>
+                        <b>Look up Members: {{ membArr.length }}</b>
+                    </h3>
+                    <hr>
+                    <div mat-dialog-content>
+                        <table mat-table [dataSource]="membDataSource" class="mat-elevation-z8" style="width: 65vw; height: 50vh;">
+                            <ng-container matColumnDef="cpr">
+                                <th mat-header-cell *matHeaderCellDef> CPR NO </th>
+                                <td mat-cell *matCellDef="let memb"> {{ memb.MemberNo }} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef> NAME </th>
+                                <td mat-cell *matCellDef="let memb"> {{ memb.NAME }} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="email">
+                                <th mat-header-cell *matHeaderCellDef> EMAIL </th>
+                                <td mat-cell *matCellDef="let memb"> {{ memb.Email }} </td>
+                            </ng-container>
+                            <tr mat-row *matRowDef="let row; columns: membDisplayedColumns;  let i= index"
+                            [ngClass]="{'highlight': selectedRowIndex == i}"
+                            (click)="highlight(i)"
+                            tabindex="999"
+                            (keydown.arrowdown)="arrowDownEvent(selectedRowIndex)"
+                            (keydown.arrowup)="arrowUpEvent(selectedRowIndex)" 
+                            (keydown.enter)="onViewCellClicked(membArr[selectedRowIndex])" ></tr>
+                        </table>
+                    </div>
+                    <mat-dialog-actions align="end">
+                        <button mat-button 
+                        matDialogClose="close">Close</button>
+                    </mat-dialog-actions>
+                </ng-template>
+            </div>
+        </div>
+    </div>    
+</div>      

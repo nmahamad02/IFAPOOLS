@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { SigninComponent } from './signin/signin.component';
 import { SharedModule } from '../../archive/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 export const authenticationRoutes = [
   {
@@ -14,12 +15,17 @@ export const authenticationRoutes = [
   {
     path: 'signin',
     component: SigninComponent
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
   }
 ];
 
 @NgModule({
   declarations: [
     SigninComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     CommonModule,
