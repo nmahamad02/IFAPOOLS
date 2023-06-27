@@ -1,84 +1,162 @@
 <div class="container-fluid">
     <div class="row no-gutters">
         <div class="visualization-heading col-12">
-            <div class="heading-info row">
-                <div class="col-10">
-                    <h2 class="heading-title">Voting Analysis</h2>
+            <div class="heading-info">
+                <div class="row">
+                    <div class="col-10">
+                        <h2 class="heading-title">Voting Analysis</h2>
+                    </div>
+                    <div class="col-2">
+                        <button mat-raised-button class="bg-primary text-white btn btn-block" (click)="fireEvent()" style="float: right;">
+                            <mat-icon>download</mat-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
             <hr>
-            <div class="col-12">
-                <form class="form-container" [formGroup]="analysisForm">
-                    <div class="row">
-                        <div class="col-3">
-                            <mat-form-field class="full-width"> 
-                                <mat-label>CPR Number</mat-label>
-                                <input type="text" formControlName="cprno" matInput (keydown.f2)="lookUpMembers()">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-3">
-                            <mat-form-field class="full-width"> 
-                                <mat-label>Name</mat-label>
-                                <input type="text" formControlName="name" matInput>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-3">
-                            <mat-form-field class="full-width"> 
-                                <mat-label>Category</mat-label>
-                                <mat-select formControlName="category">
-                                    <mat-option> ----- </mat-option>
-                                    <mat-option value="GENERAL">General Voting</mat-option>
-                                    <mat-option value="BYLAW">Bylaw Voting</mat-option>
-                                </mat-select>
-                            </mat-form-field>     
-                        </div>
-                        <div class="col-3">
-                            <button mat-raised-button class="bg-secondary text-white btn btn-block" (click)="searchMember()" style="float: right;">
-                                <mat-icon>search</mat-icon> Search
-                            </button>
-                        </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="chart-wrapper" >
+                        <canvas baseChart #baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
                     </div>
-                </form>
+                </div>
+                <div class="col-6">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                            <tr>
+                                <th>Member Turnout</th>
+                                <td>{{ mVoterElectorate }}</td>
+                            </tr>
+                            <tr>
+                                <th>Members who voted</th>
+                                <td>{{ mVotedMembers }}</td>
+                            </tr>
+                            <tr>
+                                <th>Members who did not vote</th>
+                                <td>{{ mNotVotedMembers }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="col-12">
-                <table #table1 class="table table-striped table-hover table-sm table-bordered" >
-                    <thead>
-                        <tr class="table-reflow" style="background-color: rgb(2, 46, 82); color: white;">
-                            <th style="width: 5%;">
-                                SL NO
-                            </th>
-                            <th style="width: 85%;">
-                                DESCRIPTION
-                            </th>
-                            <th style="width: 5%;">
-                                YES
-                            </th>
-                            <th style="width: 5%;">
-                                NO
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let ques of voteArr; let i = index;">
-                            <td>
-                                {{ ques.BLNO }}
-                            </td>
-                            <td>
-                                {{ ques.BLEDESCRIPTION }}
-                                <hr>
-                                {{ ques.BLADESCRIPTION }}
-                            </td>
-                            <td>
-                                {{ ques.votedYES }}
-                            </td>
-                            <td>
-                                {{ ques.votedNo }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <mat-tab-group>
+                    <mat-tab label="Attendance List">
+                        <table #table1 class="table table-striped table-hover table-sm table-bordered" >
+                            <thead>
+                                <tr style="background-color: darkblue; color: white;">
+                                    <th></th>
+                                    <th>CPR</th>
+                                    <th>Login Name</th>
+                                    <th>Name</th>
+                                    <th>Type</th>                                    
+                                    <th>Email</th>
+                                    <th>Voted Bylaw</th>
+                                    <th>Voted General</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let m of attList; let i = index">
+                                    <td>{{ i+1 }}</td>
+                                    <td>{{ m.membNo }}</td>
+                                    <td>{{ m.mLoginName }}</td>
+                                    <td>{{ m.mName }}</td>
+                                    <td>{{ m.mType }}</td>
+                                    <td>{{ m.mEmail }}</td>
+                                    <td>{{ m.mBylawVote }}</td>
+                                    <td>{{ m.mGeneralVote }}</td>
+                                </tr>
+                                <tr>
+                                    <th Colspan="8">
+                                        The following list is of those members who did not personally attend the meeting but were voted on by their proxies.
+                                    </th>
+                                </tr>
+                                <tr *ngFor="let m of proxArr; let i = index">
+                                    <td>{{ i+1 }}</td>
+                                    <td>{{ m.membNo }}</td>
+                                    <td Colspan="2">{{ m.mName }}</td>
+                                    <td>{{ m.mType }}</td>
+                                    <td>{{ m.mEmail }}</td>
+                                    <td>{{ m.mBylawVote }}</td>
+                                    <td>{{ m.mGeneralVote }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </mat-tab>
+                    <mat-tab label="Voter Details">
+                        <br>
+                        <form class="form-container" [formGroup]="analysisForm">
+                            <div class="row">
+                                <div class="col-3">
+                                    <mat-form-field class="full-width"> 
+                                        <mat-label>CPR Number</mat-label>
+                                        <input type="text" formControlName="cprno" matInput (keydown.f2)="lookUpMembers()">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field class="full-width"> 
+                                        <mat-label>Name</mat-label>
+                                        <input type="text" formControlName="name" matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field class="full-width"> 
+                                        <mat-label>Category</mat-label>
+                                        <mat-select formControlName="category">
+                                            <mat-option> ----- </mat-option>
+                                            <mat-option value="GENERAL">General Voting</mat-option>
+                                            <mat-option value="BYLAW">Bylaw Voting</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>     
+                                </div>
+                                <div class="col-3">
+                                    <button mat-raised-button class="bg-secondary text-white btn btn-block" (click)="searchMember()" style="float: right;">
+                                        <mat-icon>search</mat-icon> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="col-12">
+                            <table #table1 class="table table-striped table-hover table-sm table-bordered" >
+                                <thead>
+                                    <tr class="table-reflow" style="background-color: rgb(2, 46, 82); color: white;">
+                                        <th style="width: 5%;">
+                                            SL NO
+                                        </th>
+                                        <th style="width: 85%;">
+                                            DESCRIPTION
+                                        </th>
+                                        <th style="width: 5%;">
+                                            YES
+                                        </th>
+                                        <th style="width: 5%;">
+                                            NO
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let ques of voteArr; let i = index;">
+                                        <td>
+                                            {{ ques.BLNO }}
+                                        </td>
+                                        <td>
+                                            {{ ques.BLEDESCRIPTION }}
+                                            <hr>
+                                            {{ ques.BLADESCRIPTION }}
+                                        </td>
+                                        <td>
+                                            {{ ques.votedYES }}
+                                        </td>
+                                        <td>
+                                            {{ ques.votedNo }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
             </div>
-
             <div class="col-12">
                 <ng-template #membLookupDialog style="width: 60%;">
                     <h3 matDialogTitle>

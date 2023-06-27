@@ -104,7 +104,7 @@ export class AttendanceComponent implements OnInit {
     wb.Sheets["Sheet1"]["F"] = fmt;
 
     /* save to file */
-    XLSX.writeFile(wb, "SheetJS.xlsx");
+    XLSX.writeFile(wb, "Voter-Register-List.xlsx");
   }
 
   public gotoPropertyDetails(url, id) {

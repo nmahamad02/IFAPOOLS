@@ -44,8 +44,8 @@ export class DashboardComponent implements OnInit {
   };
   public pieChart1Labels: Label[] = ['Registered Members', 'Unregistered Members', 'Proxy Members'];
   public pieChart1Data: SingleDataSet  = [this.mRegMemCount, this.mUnRegMemCount, this.mProxMemCount]
-  public pieChart3Labels: Label[] = ['Registered Members', 'Members Voted', 'Members who did not vote'];
-  public pieChart3Data: SingleDataSet  = [this.mVoterElectorate, this.mVotedMembers, this.mNotVotedMembers]
+  public pieChart3Labels: Label[] = ['Members Voted', 'Members who did not vote'];
+  public pieChart3Data: SingleDataSet  = [this.mVotedMembers, this.mNotVotedMembers]
   public pieChart2Labels: Label[] = ['Registered Properties', 'Unregistered Properties'];
   public pieChart2Data: SingleDataSet  = [this.mRegPropCount, this.mUnRegPropCount]
   public pieChartType: ChartType = 'pie';
@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit {
                 this.mVoterElectorate = this.mRegMemCount
                 this.mVotedMembers = res.recordset[0].VOTERS
                 this.mNotVotedMembers = this.mVoterElectorate - this.mVotedMembers
-                this.pieChart3Data = [this.mVoterElectorate, this.mVotedMembers, this.mNotVotedMembers]
+                this.pieChart3Data = [this.mVotedMembers, this.mNotVotedMembers]
               })
             }, (err: any) => {
             console.log(err)

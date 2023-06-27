@@ -11,8 +11,12 @@ export class VotingService {
 
   getAllVoteTypes() {
     return this.http.get(this.url + '/voting/types')
-  }    
+  }
   
+  getVotingAttendance() {
+    return this.http.get(this.url + '/voting/attendance')
+  }    
+
   getVotingQuestions(category: string, year: string) {
     return this.http.get(this.url + '/voting/questions/' + category + '/' + year)
   }    
@@ -27,10 +31,18 @@ export class VotingService {
   
   checkVotingNumber() {
     return this.http.get(this.url + '/voting/number')
+  }    
+  
+  checkVotingProxy() {
+    return this.http.get(this.url + '/voting/proxy')
   }  
 
   checkVotingStatus(membno: string, category: string, year: string) {
     return this.http.get(this.url + '/voting/member/check/' + membno + '/' + category + '/' + year)
+  }   
+  
+  countVotingStatus(membno: string, category: string, year: string) {
+    return this.http.get(this.url + '/voting/member/count/' + membno + '/' + category + '/' + year)
   }  
 
   submitVote(year: string, memberno: string, category: string, no: string, item: string, engDesc: string, araDesc: string, voted: string, votedby: string, membertype: string) {
