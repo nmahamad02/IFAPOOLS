@@ -11,6 +11,10 @@ export class VotingService {
 
   getAllVoteTypes() {
     return this.http.get(this.url + '/voting/types')
+  }  
+  
+  getActiveVoteTypes() {
+    return this.http.get(this.url + '/voting/active/types')
   }
   
   getVotingAttendance() {

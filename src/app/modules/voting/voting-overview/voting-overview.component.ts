@@ -23,7 +23,7 @@ export class VotingOverviewComponent implements OnInit {
   }
 
   getData() {
-    this.votingService.getAllVoteTypes().subscribe((res: any) => {
+    this.votingService.getActiveVoteTypes().subscribe((res: any) => {
       this.votingType = res.recordset
     })
     this.crmservice.getMemberFromCPR(this.uC).subscribe((res: any) => {
