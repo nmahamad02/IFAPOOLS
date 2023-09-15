@@ -67,6 +67,19 @@ export class AuthenticationService {
     return this.http.post(this.url + 's/new', JSON.stringify(newUsr), { headers: headers })
   }
 
+  sendNewUserEmail(cprno: string, password: string, recipient: string, creatdt: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const newUsr = {
+      cprno: cprno,
+      password: password,
+      recipient: recipient,
+      creatdt: creatdt,
+    }
+
+    return this.http.post(this.url + '/email/registration', JSON.stringify(newUsr), { headers: headers })
+  }
+
   logout(): Observable<any> {
     this.loggedUser = null;
     localStorage.setItem('firstname', "");

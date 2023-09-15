@@ -1,4 +1,4 @@
-<div class="row no-gutters signin-page container">
+<div class="row no-gutters signin-page container-fluid">
   <div class="col-md-7 col-lg-6 col-sm-12 form-section">
     <h1 class="page-title">Floating City Amwaj <br> Owners Association Portal</h1>
     <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
@@ -20,6 +20,10 @@
       <div class="form-call-to-actions">
         <a class="link-text" [routerLink]="['/authentication/forgot-password']">Forgot password?</a>
         <button class="sign-in-btn" type="submit" (click)="onSignin()">Sign In</button>
+      </div>
+      <div class="form-call-to-actions">
+        <p style="color: gray;">Haven't registered to the Portal yet?&nbsp;&nbsp;&nbsp;</p>
+        <a class="link-text" [routerLink]="['/authentication/signup']">Sign up here!</a>
       </div>
     </form>
     

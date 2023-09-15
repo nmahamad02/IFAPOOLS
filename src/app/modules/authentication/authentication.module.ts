@@ -5,16 +5,24 @@ import { SigninComponent } from './signin/signin.component';
 import { SharedModule } from '../../archive/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { SignupComponent } from './signup/signup.component';
+import { MatCardModule } from '@angular/material/card'
+import { MatDividerModule } from '@angular/material/divider'
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 export const authenticationRoutes = [
   {
     path: '',
-    redirectTo: 'signup',
+    redirectTo: 'signin',
     pathMatch: 'full'
   },
   {
     path: 'signin',
     component: SigninComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
   },
   {
     path: 'forgot-password',
@@ -25,12 +33,16 @@ export const authenticationRoutes = [
 @NgModule({
   declarations: [
     SigninComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    SignupComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     FormsModule,
+    MatCardModule,
+    MatDividerModule,
+    PdfViewerModule,
     ReactiveFormsModule,
     RouterModule.forChild(authenticationRoutes)
   ]

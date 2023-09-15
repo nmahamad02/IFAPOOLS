@@ -142,13 +142,60 @@ export class CrmService {
   getAllProperties(){
     return this.http.get(this.url + '/properties')
   }
+
+  getPropertyFromHouseNo(houseNo: string){
+    return this.http.get(this.url + '/property/house/' + houseNo)
+  }
+
+  getMaxJobId() {
+    return this.http.get(this.url + '/properties/maximum')
+  }
+
+  addNewProperty(jobNo: string, houseNo: string, cprno: string, rooms: string, bathrooms: string,carparks: string, totalArea: string, titleDeed: string, plotno: string, plotArea: string, builtUpArea: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const newTran = {
+      jobNo: jobNo,
+      houseNo: houseNo,
+      cprno: cprno,
+      rooms: rooms,
+      bathrooms: bathrooms,
+      carparks: carparks,
+      totalArea: totalArea,
+      titleDeed: titleDeed,
+      plotno: plotno,
+      plotArea: plotArea,
+      builtUpArea: builtUpArea,
+    }
+
+    return this.http.post(this.url + '/property/new', JSON.stringify(newTran), { headers: headers })
+  }
+
+  updateProperty(houseNo: string, cprno: string, rooms: string, bathrooms: string,carparks: string, totalArea: string, titleDeed: string, plotno: string, plotArea: string, builtUpArea: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const newTran = {
+      houseNo: houseNo,
+      cprno: cprno,
+      rooms: rooms,
+      bathrooms: bathrooms,
+      carparks: carparks,
+      totalArea: totalArea,
+      titleDeed: titleDeed,
+      plotno: plotno,
+      plotArea: plotArea,
+      builtUpArea: builtUpArea,
+    }
+
+    return this.http.post(this.url + '/property/update', JSON.stringify(newTran), { headers: headers })
+  }
   
   getAllPropertyWiseLandlords(){
     return this.http.get(this.url + '/properties/landlords')
   }
   
   getLandlordWiseProperties(memberno: string){
-    return this.http.get(this.url + '/property/' + memberno)
+    return this.http.get(this.url + '/propertyFromLandlord/' + memberno)
   }
 
   getAllDocuments(memberno: string, houseno: string) {
@@ -205,6 +252,57 @@ export class CrmService {
 
   getMemberNotification() {
     return this.http.get(this.url + '/members/notification')
+  }  
+  
+  getOPBALFromPcode(pcode: string) {
+    return this.http.get(this.url + '/opbal/pcode/' + pcode)
+  }
+
+  addNewOpbal(cpr: string, fullname: string, add1: string, add2: string, add3: string, phone1: string, phone2: string, mobile: string, email: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const newTran = {
+      name: fullname,
+      add1: add1,
+      add2: add2,
+      add3: add3,
+      phone1: phone1,
+      phone2: phone2,
+      mobile: mobile, 
+      email: email,
+      cpr: cpr,
+    }
+    return this.http.post(this.url + '/opbal/new', JSON.stringify(newTran), { headers: headers })
+  }
+
+  updateOpbal(cpr: string, fullname: string, add1: string, add2: string, add3: string, phone1: string, phone2: string, mobile: string, email: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const newTran = {
+      name: fullname,
+      add1: add1,
+      add2: add2,
+      add3: add3,
+      phone1: phone1,
+      phone2: phone2,
+      mobile: mobile, 
+      email: email,
+      cpr: cpr,
+    }
+    return this.http.post(this.url + '/opbal/update', JSON.stringify(newTran), { headers: headers })
+  }
+
+  addNewJob(jobNo: string, year: string, houseNo: string, createDate: string, cpr: string, fullname: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const newTran = {
+      name: fullname,
+      jobNo: jobNo,
+      year: year,
+      houseNo: houseNo,
+      cpr: cpr,
+      createDate: createDate,
+    }
+    return this.http.post(this.url + '/job/new', JSON.stringify(newTran), { headers: headers })
   }
 }
-3

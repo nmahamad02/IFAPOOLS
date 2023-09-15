@@ -29,9 +29,17 @@ export class VotingService {
     return this.http.get(this.url + '/voting/members/' + category + '/' + cpr)
   }    
 
+  getVotingElectorate() {
+    return this.http.get(this.url + '/voting/electorate')
+  }
+
   getVotingQuestionWiseResults(category: string) {
     return this.http.get(this.url + '/voting/results/' + category)
   }    
+
+  getVotingCalculatedQuestionWiseResults(category: string) {
+    return this.http.get(this.url + '/voting/calculated/results/' + category)
+  }  
   
   checkVotingNumber() {
     return this.http.get(this.url + '/voting/number')

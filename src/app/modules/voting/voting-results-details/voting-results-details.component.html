@@ -42,10 +42,14 @@
                                 {{ ques.BLADESCRIPTION }}
                             </td>
                             <td>
-                                {{ ques.voTedYES }}
+                                {{ (ques.voTedYES/(ques.voTedYES+ques.votedNO))*100 | number : '1.2-2'}}%
+                                <br>
+                                ({{ ques.voTedYES | number : '1.2-2'}})
                             </td>
                             <td>
-                                {{ ques.votedNO }}
+                                {{ (ques.votedNO/(ques.voTedYES+ques.votedNO))*100 | number : '1.2-2'}}%
+                                <br>
+                                ({{ ques.votedNO | number : '1.2-2'}})
                             </td>
                             <td>
                                 <canvas baseChart #baseChart [data]="pieChartData[i]" [labels]="pieChartLabels" [colors]="pieChartColors" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>

@@ -18,6 +18,8 @@ export class VotingResultsDetailsComponent implements OnInit {
   resultList: any[] = []
   sumYes = 0; 
   sumNo = 0;
+  sumArea: number;
+  area: number;
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -33,7 +35,16 @@ export class VotingResultsDetailsComponent implements OnInit {
   public pieChartPlugins = [];
 
   constructor(private route:ActivatedRoute, private crmService:CrmService, private votingservice: VotingService) { 
-    this.votingservice.getVotingQuestionWiseResults(this.mCat).subscribe((res: any) => {
+    /*this.votingservice.getVotingQuestionWiseResults(this.mCat).subscribe((res: any) => {
+      console.log(res.recordset)
+      this.resultList = res.recordset;
+      for(let i=0; i<res.recordset.length; i++) {
+        const data: SingleDataSet = [res.recordset[i].voTedYES,res.recordset[i].votedNO]
+        this.pieChartData.push(data)
+      }
+    })*/
+
+    this.votingservice.getVotingCalculatedQuestionWiseResults(this.mCat).subscribe((res: any) => {
       console.log(res.recordset)
       this.resultList = res.recordset;
       for(let i=0; i<res.recordset.length; i++) {
@@ -47,5 +58,4 @@ export class VotingResultsDetailsComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

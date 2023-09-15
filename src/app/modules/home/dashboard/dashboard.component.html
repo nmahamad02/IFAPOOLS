@@ -7,86 +7,76 @@
             <hr>
             <div class="row">
                 <div class="col-6">
-                    <div class="chart-wrapper" >
-                        <h6>Voters</h6>
-                        <canvas baseChart #baseChart [data]="pieChart3Data" [labels]="pieChart3Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
-                    </div>
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-subtitle>
+                                Voters
+                            </mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="col-12">
+                                <div class="chart-wrapper" >
+                                    <canvas baseChart #baseChart [data]="pieChart3Data" [labels]="pieChart3Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <table class="table table-striped table-hover" style="font-size: small;">
+                                    <tbody>
+                                        <tr>
+                                            <th>Total Number of Registered Members</th>
+                                            <td>{{ mVoterElectorate }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Members who have voted</th>
+                                            <td>{{ mVotedMembers }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Members who have yet to vote</th>
+                                            <td>{{ mNotVotedMembers }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
                 <div class="col-6">
-                    <table class="table table-striped table-hover">
-                        <tbody>
-                            <tr>
-                                <th>Total Number of Registered Members</th>
-                                <td>{{ mVoterElectorate }}</td>
-                            </tr>
-                            <tr>
-                                <th>Members who have voted</th>
-                                <td>{{ mVotedMembers }}</td>
-                            </tr>
-                            <tr>
-                                <th>Members who have yet to vote</th>
-                                <td>{{ mNotVotedMembers }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-6">
-                    <table class="table table-striped table-hover">
-                        <tbody>
-                            <tr>
-                                <th>Total Number of Members</th>
-                                <td>{{ mMemCount }}</td>
-                            </tr>
-                            <tr>
-                                <th>Registered Members</th>
-                                <td>{{ mRegMemCount }}</td>
-                            </tr>
-                            <tr>
-                                <th>Unregistered Members</th>
-                                <td>{{ mUnRegMemCount }}</td>
-                            </tr>
-                            <tr>
-                                <th>Proxy Members</th>
-                                <td>{{ mProxMemCount }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-6">
-                    <div class="chart-wrapper" >
-                        <h6>Members</h6>
-                        <canvas baseChart #baseChart [data]="pieChart1Data" [labels]="pieChart1Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
-                    </div>
-                </div>
-            </div>
-            <hr>            
-            <div class="row">
-                <div class="col-6">
-                    <div class="chart-wrapper" >
-                        <h6>Properties</h6>
-                        <canvas baseChart #baseChart [data]="pieChart2Data" [labels]="pieChart2Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <table class="table table-striped table-hover">
-                        <tbody>
-                            <tr>
-                                <th>Total Number of Properties</th>
-                                <td>{{ mPropCount }}</td>
-                            </tr>
-                            <tr>
-                                <th>Registered Properties</th>
-                                <td>{{ mRegPropCount }}</td>
-                            </tr>
-                            <tr>
-                                <th>Unregistered Properties</th>
-                                <td>{{ mUnRegPropCount }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-subtitle>
+                                Members
+                            </mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="col-12">
+                                <div class="chart-wrapper" >
+                                    <canvas baseChart #baseChart [data]="pieChart1Data" [labels]="pieChart1Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <table class="table table-striped table-hover" style="font-size: small;">
+                                    <tbody>
+                                        <tr>
+                                            <th>Registered Members</th>
+                                            <td>{{ mRegMemCount }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Unregistered Members</th>
+                                            <td>{{ mUnRegMemCount }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Proxy Members</th>
+                                            <td>{{ mProxMemCount }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Number of Members</th>
+                                            <td>{{ mMemCount }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
             </div>
             <hr>
@@ -102,3 +92,34 @@
         </div>
     </div>    
 </div>
+
+
+
+<!--
+                    <div class="col-4">
+                    <div class="col-12">
+                        <div class="chart-wrapper" >
+                            <h6>Properties</h6>
+                            <canvas baseChart #baseChart [data]="pieChart2Data" [labels]="pieChart2Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-striped table-hover" style="font-size: small;">
+                            <tbody>
+                                <tr>
+                                    <th>Total Number of Properties</th>
+                                    <td>{{ mPropCount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Registered Properties</th>
+                                    <td>{{ mRegPropCount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Unregistered Properties</th>
+                                    <td>{{ mUnRegPropCount }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+-->

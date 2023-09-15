@@ -393,7 +393,6 @@ export class MembersComponent implements OnInit {
     });
   }
 
-
   uploadImage() {
     if (!this.selectedFileToUpload) {
       alert('Please select a file first!'); // or any other message to the user to choose a file
