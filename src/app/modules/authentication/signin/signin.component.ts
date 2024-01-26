@@ -9,7 +9,7 @@ import { AuthenticationService } from '../authentication.service';
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit {
-  title = 'IFAGATE';
+  title = 'IFAPOOLS';
   notmatched: boolean = false;
 
   loading = false;
