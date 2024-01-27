@@ -20,6 +20,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccountComponent } from './account/account.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 
 export const homeRoutes = [
@@ -34,7 +35,8 @@ export const homeRoutes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, AccountComponent],
+  declarations: [DashboardComponent, AccountComponent,    CarouselComponent
+  ],
   imports: [
     CommonModule,
     ChartsModule,
@@ -57,6 +59,9 @@ export const homeRoutes = [
   ],
   providers: [
     ThemeService
-  ]
+  ],
+  exports: [
+    CarouselComponent
+  ],
 })
 export class HomeModule { }

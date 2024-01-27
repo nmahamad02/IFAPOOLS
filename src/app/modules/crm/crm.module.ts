@@ -2,11 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ChartsModule, ThemeService } from 'ng2-charts';
-import { MembersComponent } from './member-component/members/members.component';
-import { UnitsComponent } from './property-component/units/units.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MemberListComponent } from './member-component/member-list/member-list.component';
-import { UnitListComponent } from './property-component/unit-list/unit-list.component';
 import { MatIconModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,35 +18,40 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from "@angular/material/sort";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-
+import { CustomerListComponent } from './customers/customer-list/customer-list.component';
+import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
+import { ContactListComponent } from './contacts/contact-list/contact-list.component';
+import { ContactDetailsComponent } from './contacts/contact-details/contact-details.component';
+import { MatDialogModule } from '@angular/material/dialog'
 
 export const crmRoutes = [
   {
-    path: 'property-list',
-    component: UnitListComponent
+    path: 'customer-list',
+    component: CustomerListComponent
   },
   {
-    path: 'property/details/:id',
-    component: UnitsComponent
+    path: 'customer/details/:id',
+    component: CustomerDetailsComponent
   },
   {
-    path: 'owner-list',
-    component: MemberListComponent
+    path: 'contact-list',
+    component: ContactListComponent
   },
   {
-    path: 'owner/details/:id',
-    component: MembersComponent
+    path: 'contact/details/:id',
+    component: ContactDetailsComponent
   },
 ];
 
 @NgModule({
   declarations: [
-    MembersComponent, 
-    MemberListComponent,
-    UnitsComponent,
-    UnitListComponent
+  CustomerListComponent,
+  CustomerDetailsComponent,
+  ContactListComponent,
+  ContactDetailsComponent,
   ],
   imports: [
+    MatDialogModule,
     MatIconModule,
     CommonModule,
     ChartsModule,

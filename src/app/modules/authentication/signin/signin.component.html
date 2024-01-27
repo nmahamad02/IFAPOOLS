@@ -1,8 +1,9 @@
 <div class="row no-gutters signin-page container-fluid">
   <div class="col-md-7 col-lg-6 col-sm-12 form-section">
-    <h1 class="page-title">H. A. Al Rashid Pools</h1>
+    <!--<h1 class="page-title">H. A. Al Rashid Pools</h1>-->
+    <img src="../../../../assets/pics/favicon.png" style="width: 100%;">
     <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
-    <form class="signin-form" [formGroup]="signinForm" (ngSubmit)="onSignin()">
+    <form class="signin-form" [formGroup]="signinForm">
       <div class="form-group">
         <label for="username" style="padding-bottom: 10px;">Username</label>
         <input type="text" class="form-control" id="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" >
@@ -29,6 +30,6 @@
     
   </div>
   <div class="col-md-5 col-lg-6 d-none d-md-block image-section">
-    <cc-image-shell class="signin-image add-overlay" animation="spinner" [mode]="'cover'" [src]="'/assets/pics/Amwaj-Islands.jpg'" [alt]="'app image'"></cc-image-shell>
+    <cc-image-shell class="signin-image add-overlay" animation="spinner" [mode]="'cover'" [src]="'/assets/pics/Pool-1.jpg'" [alt]="'app image'"></cc-image-shell>
   </div>
 </div>

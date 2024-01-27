@@ -41,7 +41,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   onChangePassword(){
     const data = this.recoverPasswordForm.value;
-    //this.encrypt(data.password);
+    this.encrypt(data.password);
     this.authenticationService.recoverPassword(data.username, data.password).subscribe((res: any) => {
       this.router.navigate(['authentication/signin']);
     });

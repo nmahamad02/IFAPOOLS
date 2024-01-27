@@ -1,314 +1,82 @@
-<div class="row no-gutters signup-page container-fluid">
-    <div class="col-12 form-section">
-        <h1 class="page-title">Portal Registeration</h1>
-        <span class="page-subtitle">
-            Welcome to the Floating City Amwaj Owners Association Portal! Please follow the steps and enter all your details and information about the properties that you own in Floating City Amwaj. If you have already registered yourself to gain access to the portal, <a class="link-text" [routerLink]="['/authentication/signin']">click here to return to Sign in.</a>
-        </span>
-        <div class="col-12">
-            <br>
-            <mat-card>
-                <mat-card-content>
-                    <form class="form-container" [formGroup]="detailForm">
-                        <div class="col-12" *ngIf="showMemberDetails">
-                            <h6>&#9312; Let's start by entering your details.</h6>
-                            <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The following pages will allow you to add, review and edit property details. If you would like to skip that step for now, please press the<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;skip button below.</h6>
-                            <hr>
-                            <div class="row">
-                                <div class="col-9">
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>CPR Number</mat-label>
-                                                <input #cprno type="text" formControlName="cprno" matInput required (focusout)="searchLandlord(cprno.value)">
-                                                <mat-error>CPR is <strong>required</strong>
-                                                </mat-error>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-6">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>Name</mat-label>
-                                                <input type="text" formControlName="name" matInput required>
-                                                <mat-error>Name is <strong>required</strong>
-                                                </mat-error>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-3">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>Member Type</mat-label>
-                                                <mat-select #memberType formControlName="memberType" required>
-                                                    <mat-option value="O"> Owner </mat-option>
-                                                    <mat-option value="P"> Proxy </mat-option>
-                                                    <mat-option value="T"> Tenant </mat-option>
-                                                  </mat-select>
-                                                <mat-error>
-                                                    Member Type is <strong>required</strong>
-                                                </mat-error>                                    
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>Address 1</mat-label>
-                                                <input type="text" formControlName="add1" matInput>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-4">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>Address 2</mat-label>
-                                                <input type="text" formControlName="add2" matInput>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-4">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>Address 3</mat-label>
-                                                <input type="text" formControlName="add3" matInput>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>Phone 1</mat-label>
-                                                <input type="text" formControlName="phone1" matInput>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-3">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>Phone 2</mat-label>
-                                                <input type="text" formControlName="phone2" matInput>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-3">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>Mobile Number</mat-label>
-                                                <input type="text" formControlName="mobile" matInput>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-3">
-                                            <mat-form-field class="full-width"> 
-                                                <mat-label>Email ID</mat-label>
-                                                <input type="text" formControlName="email" matInput required>
-                                                <mat-error><strong>Invalid</strong> Email ID</mat-error>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <img [src]="imageSrc" *ngIf="imageSrc" style="width:100%">
-                                    <input id="image" type="file" class="form-control" (change)="onImageChange($event)">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12" *ngIf="showPropertyDetails">
-                            <div class="row">
-                                <div class="col-10">
-                                    <h6>&#9313; Then let's enter the details of your properties at Floating City Amwaj</h6>
-                                </div>
-                                <div class="col-2">
-                                    <button class="btn btn-success" style="float: right;" (click)="addProperty()">&#43;</button>
-                                </div>
-                            </div>
-                            <hr>
-                            <ng-container formArrayName="properties">
-                                <mat-card *ngFor="let prop of properties.controls; let i = index;" [formGroupName]="i" >
-                                    <mat-card-content>
-                                        <div class="row">
-                                            <div class="col-8">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <mat-form-field class="full-width"> 
-                                                            <mat-label>Unit Number</mat-label>
-                                                            <input type="text" formControlName="pHFNo" matInput>
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <mat-form-field class="full-width"> 
-                                                            <mat-label>Title Deed</mat-label>
-                                                            <input type="text" formControlName="pParcelNo" matInput>
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <mat-form-field class="full-width"> 
-                                                            <mat-label>Plot Number</mat-label>
-                                                            <input type="text" formControlName="pPlotNo" matInput>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <mat-form-field class="full-width"> 
-                                                            <mat-label>Plot Area (Sq. Mtr)</mat-label>
-                                                            <input type="text" formControlName="pPlotArea" matInput>
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <mat-form-field class="full-width"> 
-                                                            <mat-label>Built Up Area (Sq. Mtr)</mat-label>
-                                                            <input type="text" formControlName="pBuiltUpArea" matInput>
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <mat-form-field class="full-width"> 
-                                                            <mat-label>Total Area (Sq. Mtr)</mat-label>
-                                                            <input type="text" formControlName="pTotalArea" matInput>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <mat-divider [vertical]="true"></mat-divider>
-                                            <div class="col">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <mat-form-field class="full-width"> 
-                                                            <mat-label>Rooms</mat-label>
-                                                            <input type="text" formControlName="pRooms" matInput>
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <mat-form-field class="full-width"> 
-                                                            <mat-label>Bathrooms</mat-label>
-                                                            <input type="text" formControlName="pBathrooms" matInput>
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <mat-form-field class="full-width"> 
-                                                            <mat-label>Car Park Slots</mat-label>
-                                                            <input type="text" formControlName="pCarParkSlots" matInput>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-9">
-                                                    </div>
-                                                    <div class="col">
-                                                        <button class="btn btn-danger" (click)="deleteProperty(i)">&#10005;</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </mat-card-content>
-                                </mat-card>
-                                <br>
-                            </ng-container>
-                        </div>
-                        <div class="col-12" *ngIf="showPropertyDocuments">
-                            <h6>&#9314; You will need to upload your documents such as your CPR, the title deed of your property, and EWA receipt.</h6>
-                            <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PLEASE NOTE: Acceptable file types are: PDF. Please ensure that the document is legible before you upload it. Images cannot be <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uploaded here.)</h6>
-                            <hr>
-                            <ng-container formArrayName="properties">
-                                <mat-card *ngFor="let prop of properties.controls; let i = index;" [formGroupName]="i" >
-                                    <mat-card-content>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <h6>Entering Details for Property Number: </h6>
-                                            </div>
-                                            <div class="col-6">
-                                                <mat-form-field class="full-width"> 
-                                                    <mat-label>Unit Number</mat-label>
-                                                    <input type="text" formControlName="pHFNo" matInput readonly>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <ng-container formArrayName="pDocuments">
-                                            <div class="row">
-                                                <div class="col-4" *ngFor="let doc of documents(i).controls; let j = index" [formGroupName]="j">
-                                                    <mat-card>
-                                                        <mat-card-content>
-                                                            <div class="col-12">
-                                                                <mat-form-field class="full-width"> 
-                                                                    <mat-label>Name</mat-label>
-                                                                    <input type="text" formControlName="pDocumentSource" accept="application/pdf" matInput>
-                                                                </mat-form-field>                                                       
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <mat-form-field class="full-width"> 
-                                                                    <mat-select formControlName="pDocumentType">
-                                                                        <mat-option> ----- </mat-option>
-                                                                        <mat-option value="CPR">CPR</mat-option>
-                                                                        <mat-option value="TITLE DEED">Title Deed</mat-option>
-                                                                        <mat-option value="RECEIPT">EWA Payment Receipt</mat-option>
-                                                                    </mat-select>
-                                                                </mat-form-field>                                                       
-                                                            </div>
-                                                            <div class="col-12">
-                                                                 <pdf-viewer [src]="documents(i).at(j).value.pDocumentUrl" [original-size]="false" style="height: 100%; width: 100%;"></pdf-viewer>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <input id="pDocumentSource" type="file" class="form-control" (change)="onFileChange($event,i)">
-                                                                </div>
-                                                                <div class="col-3">
-                                                                    <button class="btn-danger btn text-white btn-block" title="Cancel this document" (click)="deleteDocument(j,i)">
-                                                                        <mat-icon>delete</mat-icon> 
-                                                                    </button>
-                                                                </div>
-                                                                <div class="col-3">
-                                                                    <button class="btn-success btn text-white btn-block" title="View document" (click)="goToLink(documents(i).at(j).value.pDocumentUrl)">
-                                                                        <mat-icon>arrow_right</mat-icon> 
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </mat-card-content>
-                                                    </mat-card>
-                                                </div>
-                                                <div class="col-1">
-                                                    <mat-card>
-                                                        <mat-card-content>
-                                                            <h1 class="heading-title" (click)="addDocument(i)">&#43;</h1>
-                                                        </mat-card-content>
-                                                    </mat-card>
-                                                </div>
-                                            </div>
-                                        </ng-container>
-                                    </mat-card-content>
-                                </mat-card>
-                                <br>
-                            </ng-container>
-                        </div>
-                        <div class="col-12" *ngIf="showLoginDetails">
-                            <h6>&#9315; Now, confirm your login credentials to gain access to the Portal.</h6>
-                            <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please note that your CPR number will act as your username to gain access to the portal. Kindly enter your password now.</h6>
-                            <hr>
-                            <div class="row">
-                                <div class="col-4">
-                                    <mat-form-field class="full-width"> 
-                                        <mat-label>Username</mat-label>
-                                        <input type="text" formControlName="cprno" matInput readonly>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-4">
-                                    <mat-form-field class="full-width"> 
-                                        <mat-label>Password</mat-label>
-                                        <input type="password" formControlName="password" matInput>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-4">
-                                    <mat-form-field class="full-width"> 
-                                        <mat-label>Confirm Password</mat-label>
-                                        <input type="password" formControlName="confirmPassword" matInput (keyup)="checkPasswords()">
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4"></div>
-                                <div class="col-8">
-                                    <h6 style="background-color: #fa9191; color: #fc0303; border: 1px solid #fc0303;">
-                                        {{ errorMessage }}
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <hr>
-                    <button class="btn btn-secondary" (click)="changePage(3)" *ngIf="showMemberDetails">Skip Property Details</button>
-                    <button class="btn btn-light" (click)="changePage(-1)" *ngIf="!showMemberDetails">Previous</button>
-                    <button class="btn btn-primary" style="float: right;" (click)="changePage(1)" *ngIf="!showLoginDetails">Next</button>
-                    <button class="btn btn-success" style="float: right;" (click)="submitForm()" *ngIf="showLoginDetails">Submit</button>
-                    <br>
-                </mat-card-content>
-            </mat-card>
+<div class="row no-gutters signup-page">
+    <div class="col-md-6 col-sm-12 form-section">
+      <h1 class="page-title">Welcome to the Portal!</h1>
+      <hr>
+      <span class="page-subtitle">
+        Already have an account? <a class="link-text" [routerLink]="['/authentication/signin']">Log In</a>.
+      </span>
+      <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSignup()">
+        <div class="form-row">
+          <div class="form-group col-12">
+            <label for="username" style="padding-bottom: 10px;">Username</label>
+            <input type="text" class="form-control" id="username" formControlName="username" >
+            <div *ngIf="submitted && g.username.errors" class="invalid-feedback">
+              <div *ngIf="g.username.errors.required">Username is required</div>
+            </div>
+          </div>
         </div>
+        <div class="form-row">
+          <div class="form-group col-lg-6 col-md-12">
+            <label for="firstname" style="padding-bottom: 10px;">First Name</label>
+            <input type="text" class="form-control" id="firstname" formControlName="firstname" >
+            <div *ngIf="submitted && g.firstname.errors" class="invalid-feedback">
+              <div *ngIf="g.firstname.errors.required">First name is required</div>
+            </div>
+          </div>
+          <div class="form-group col-lg-6 col-md-12">
+            <label for="lastname" style="padding-bottom: 10px;">Last Name</label>
+            <input type="text" class="form-control" id="lastname" formControlName="lastname" >
+            <div *ngIf="submitted && g.lastname.errors" class="invalid-feedback">
+              <div *ngIf="g.lastname.errors.required">Last name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-lg-6 col-md-12">
+            <label for="contactno" style="padding-bottom: 10px;">Contact Number</label>
+            <input type="text" class="form-control" id="contactno" formControlName="contactno" >
+            <div *ngIf="submitted && g.contactno.errors" class="invalid-feedback">
+              <div *ngIf="g.contactno.errors.required">Contact number is required</div>
+            </div>
+          </div>
+          <div class="form-group col-lg-6 col-md-12">
+            <label for="email" style="padding-bottom: 10px;">Email ID </label>
+            <input type="text" class="form-control" id="email" formControlName="emailid" >
+            <div *ngIf="submitted && g.email.errors" class="invalid-feedback">
+              <div *ngIf="g.email.errors.required">Email ID is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-lg-6 col-md-12">
+            <label for="password" style="padding-bottom: 10px;">Password</label>
+            <input type="password" class="form-control" id="password" formControlName="password"  (keyup)="checkPassword()">
+            <div *ngIf="submitted && g.password.errors" class="invalid-feedback">
+              <div *ngIf="g.password.errors.required">Password is required</div>
+            </div>
+            <div *ngIf="notmatched">Passwords do not match</div>
+          </div>
+          <div class="form-group col-lg-6 col-md-12">
+            <label for="confirmPassword" style="padding-bottom: 10px;">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"  (keyup)="checkPassword()">
+            <div *ngIf="submitted && g.confirmPassword.errors" class="invalid-feedback">
+              <div *ngIf="g.confirmPassword.errors.required">Password is required</div>
+            </div>
+            <div *ngIf="notmatched">Passwords do not match</div>
+          </div>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="terms" formControlName="terms">
+          <label class="custom-control-label" for="terms">
+            <span class="custom-label">I agree to the Terms and Privacy Policy.</span>
+          </label>
+        </div>
+        <div class="form-call-to-actions">
+          <button class="create-account-btn" type="submit" (click)="onSignup()">Create account</button>
+        </div>
+      </form>
     </div>
-</div>
-
+    <div class="col-md-6 d-none d-md-block image-section">
+      <cc-image-shell class="signup-image add-overlay" animation="spinner" [mode]="'cover'" [src]="'/assets/pics/Pool-3.jpg'" [alt]="'app image'"></cc-image-shell>
+    </div>
+  </div>

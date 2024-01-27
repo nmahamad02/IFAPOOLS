@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class AuthenticationService {
-  private url = 'http://15.185.46.105:5030/api/user';
+  private url = 'http://15.185.46.105:5100/api/user';
 
   loggedUserSubject: BehaviorSubject<LoggedUserModel>;
   loggedUser: LoggedUserModel;

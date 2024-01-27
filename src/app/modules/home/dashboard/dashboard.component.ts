@@ -3,7 +3,6 @@ import { ChartConfiguration } from 'chart.js';
 import { ChartType, ChartOptions } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, BaseChartDirective } from 'ng2-charts';
 import { CrmService } from 'src/app/services/crm/crm.service';
-import { VotingService } from 'src/app/services/voting/voting.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,7 +33,7 @@ export class DashboardComponent implements OnInit {
     this.getData();
   }
    
-  constructor(private crmService: CrmService, private votingService: VotingService) {
+  constructor(private crmService: CrmService) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
@@ -73,12 +72,6 @@ export class DashboardComponent implements OnInit {
               this.mRegPropCount = res.rowsAffected[0]
               this.mUnRegPropCount = this.mPropCount - this.mRegPropCount;
               this.pieChart2Data = [this.mRegPropCount, this.mUnRegPropCount]
-              this.votingService.checkVotingNumber().subscribe((res: any) => {
-                this.mVoterElectorate = this.mRegMemCount
-                this.mVotedMembers = res.recordset[0].VOTERS
-                this.mNotVotedMembers = this.mVoterElectorate - this.mVotedMembers
-                this.pieChart3Data = [this.mVotedMembers, this.mNotVotedMembers]
-              })
             }, (err: any) => {
             console.log(err)
           })
