@@ -22,7 +22,9 @@ import { CustomerListComponent } from './customers/customer-list/customer-list.c
 import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
 import { ContactDetailsComponent } from './contacts/contact-details/contact-details.component';
-import { MatDialogModule } from '@angular/material/dialog'
+import { MatDialogModule } from '@angular/material/dialog';
+import { ScheduleListComponent } from './schedules/schedule-list/schedule-list.component';
+import { ScheduleDetailsComponent } from './schedules/schedule-details/schedule-details.component'
 
 export const crmRoutes = [
   {
@@ -41,6 +43,14 @@ export const crmRoutes = [
     path: 'contact/details/:id',
     component: ContactDetailsComponent
   },
+  {
+    path: 'schedule-list',
+    component: ScheduleListComponent
+  },
+  {
+    path: 'schedule/details/:id',
+    component: ScheduleDetailsComponent
+  },
 ];
 
 @NgModule({
@@ -49,6 +59,8 @@ export const crmRoutes = [
   CustomerDetailsComponent,
   ContactListComponent,
   ContactDetailsComponent,
+  ScheduleListComponent,
+  ScheduleDetailsComponent,
   ],
   imports: [
     MatDialogModule,

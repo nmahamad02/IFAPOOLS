@@ -147,6 +147,14 @@ export class FinanceService {
     return this.http.get(this.url + '/coa/getUnit')
   }  
 
+  getCallList() { 
+    return this.http.get(this.url + '/helpDesk/getAllCaseLog')
+  }
+
+  getCallDetail(caselogNo: string) {
+    return this.http.get(this.url + '/helpDesk/getViewCaseLog/01/' + caselogNo)
+  }
+
 }
 
     

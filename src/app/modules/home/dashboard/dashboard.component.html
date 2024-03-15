@@ -6,85 +6,110 @@
             </div>
             <hr>
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <mat-card>
-                        <mat-card-header>
-                            <mat-card-subtitle>
-                                Voters
-                            </mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-content>
-                            <div class="col-12">
-                                <div class="chart-wrapper" >
-                                    <canvas baseChart #baseChart [data]="pieChart3Data" [labels]="pieChart3Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-striped table-hover" style="font-size: small;">
-                                    <tbody>
-                                        <tr>
-                                            <th>Total Number of Registered Members</th>
-                                            <td>{{ mVoterElectorate }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Members who have voted</th>
-                                            <td>{{ mVotedMembers }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Members who have yet to vote</th>
-                                            <td>{{ mNotVotedMembers }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </mat-card-content>
-                    </mat-card>
-                </div>
-                <div class="col-6">
-                    <mat-card>
-                        <mat-card-header>
-                            <mat-card-subtitle>
-                                Members
-                            </mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-content>
-                            <div class="col-12">
-                                <div class="chart-wrapper" >
-                                    <canvas baseChart #baseChart [data]="pieChart1Data" [labels]="pieChart1Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-striped table-hover" style="font-size: small;">
-                                    <tbody>
-                                        <tr>
-                                            <th>Registered Members</th>
-                                            <td>{{ mRegMemCount }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Unregistered Members</th>
-                                            <td>{{ mUnRegMemCount }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Proxy Members</th>
-                                            <td>{{ mProxMemCount }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total Number of Members</th>
-                                            <td>{{ mMemCount }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </mat-card-content>
+                        <mat-tab-group>
+                            <mat-tab label="Active Agreements">
+                                <mat-card-content>
+                                    <mat-table [dataSource]="activeAgreementlistDataSource" class="mat-table" matSort matSortDisableClear [multiTemplateDataRows]="true">
+                                        <ng-container matColumnDef="AGR_NO">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Agreement Number </mat-header-cell>
+                                          <mat-cell *matCellDef="let row"> {{ row.AGR_NO }} </mat-cell>
+                                        </ng-container>
+                                
+                                        <ng-container matColumnDef="AGR_DATE">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+                                          <mat-cell *matCellDef="let row"> {{ row.AGR_DATE | date :'mediumDate'}} </mat-cell>
+                                        </ng-container>
+                                
+                                        <ng-container matColumnDef="AGR_CUST_NAME">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Customer</mat-header-cell>
+                                          <mat-cell *matCellDef="let row"> {{ row.AGR_CUST_NAME }} </mat-cell>
+                                        </ng-container>
+                                        
+                                        <ng-container matColumnDef="DEPT_NAME">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Type</mat-header-cell>
+                                          <mat-cell *matCellDef="let row"> {{ row.DEPT_NAME }} </mat-cell>
+                                        </ng-container>
+                                        
+                                        <ng-container matColumnDef="GTOTAL">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Total</mat-header-cell>
+                                          <mat-cell *matCellDef="let row">BHD {{ row.GTOTAL | number : '1.3'}} </mat-cell>
+                                        </ng-container>
+                                
+                                        <!-- Button Column 
+                                        <ng-container matColumnDef="Actions">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+                                          <mat-cell *matCellDef="let row">
+                                            <button md-raised-button color="primary" class="btn-w-md ml-2 mat-button text-white" style="border-radius: 50%;" (click)="gotoProductDetails('/inventory/product/details', row.PCODE)">
+                                              View
+                                            </button>
+                                          </mat-cell>
+                                        </ng-container> -->
+                                
+                                        <mat-header-row *matHeaderRowDef="columnActiveAgreement"></mat-header-row>
+                                        <mat-row matRipple *matRowDef="let row; columns: columnActiveAgreement;"></mat-row>
+                                      </mat-table>
+                                      <mat-paginator #activePaginator [pageSize]="50" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                                     
+                                </mat-card-content>
+                            </mat-tab>
+    
+                            <mat-tab label="Inactive Agreements">
+                                <mat-card-content>
+                                    <mat-table [dataSource]="inactiveAgreementlistDataSource" class="mat-table" matSort matSortDisableClear [multiTemplateDataRows]="true">
+                                        <ng-container matColumnDef="AGR_NO">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Agreement Number </mat-header-cell>
+                                          <mat-cell *matCellDef="let row"> {{ row.AGR_NO }} </mat-cell>
+                                        </ng-container>
+                                
+                                        <ng-container matColumnDef="AGR_DATE">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+                                          <mat-cell *matCellDef="let row"> {{ row.AGR_DATE | date :'mediumDate'}} </mat-cell>
+                                        </ng-container>
+                                
+                                        <ng-container matColumnDef="AGR_CUST_NAME">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Customer</mat-header-cell>
+                                          <mat-cell *matCellDef="let row"> {{ row.AGR_CUST_NAME }} </mat-cell>
+                                        </ng-container>
+                                        
+                                        <ng-container matColumnDef="DEPT_NAME">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Type</mat-header-cell>
+                                          <mat-cell *matCellDef="let row"> {{ row.DEPT_NAME }} </mat-cell>
+                                        </ng-container>
+                                        
+                                        <ng-container matColumnDef="GTOTAL">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Total</mat-header-cell>
+                                          <mat-cell *matCellDef="let row">BHD {{ row.GTOTAL | number : '1.3'}} </mat-cell>
+                                        </ng-container>
+                                
+                                        <!-- Button Column 
+                                        <ng-container matColumnDef="Actions">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+                                          <mat-cell *matCellDef="let row">
+                                            <button md-raised-button color="primary" class="btn-w-md ml-2 mat-button text-white" style="border-radius: 50%;" (click)="gotoProductDetails('/inventory/product/details', row.PCODE)">
+                                              View
+                                            </button>
+                                          </mat-cell>
+                                        </ng-container> -->
+                                
+                                        <mat-header-row *matHeaderRowDef="columnInactiveAgreement"></mat-header-row>
+                                        <mat-row matRipple *matRowDef="let row; columns: columnInactiveAgreement;"></mat-row>
+                                      </mat-table>
+                                      <mat-paginator #inactivePaginator [pageSize]="50" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                                    
+                                </mat-card-content>
+                            </mat-tab>
+                        </mat-tab-group>
                     </mat-card>
                 </div>
             </div>
             <hr>
             <div class="col-12">
-                <h6 class="heading-title">How to use the FC Portal?</h6>
+                <h6 class="heading-title">How to use the IFAPOOLS Portal?</h6>
                 <div class="video">
                     <video controls #videoPlayer style="width: 100%;">
-                        <source src="{{videoSource}}" type="video/mp4" />
+                        <source /> <!--src="{{videoSource}}" type="video/mp4" /> -->
                         Browser not supported
                     </video>
                 </div>
@@ -92,34 +117,3 @@
         </div>
     </div>    
 </div>
-
-
-
-<!--
-                    <div class="col-4">
-                    <div class="col-12">
-                        <div class="chart-wrapper" >
-                            <h6>Properties</h6>
-                            <canvas baseChart #baseChart [data]="pieChart2Data" [labels]="pieChart2Labels" [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <table class="table table-striped table-hover" style="font-size: small;">
-                            <tbody>
-                                <tr>
-                                    <th>Total Number of Properties</th>
-                                    <td>{{ mPropCount }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Registered Properties</th>
-                                    <td>{{ mRegPropCount }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Unregistered Properties</th>
-                                    <td>{{ mUnRegPropCount }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
--->
