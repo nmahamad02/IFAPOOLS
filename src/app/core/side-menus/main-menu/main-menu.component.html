@@ -84,6 +84,18 @@
         </div>
       </mat-expansion-panel-header>
       <li class="menu-item nav-item" [routerLinkActive]="['active']">
+        <a class="menu-link nav-link" [routerLinkActive]="['active']" [routerLink]="['/inventory/category-list']">
+          <i class="menu-item-icon"></i>
+          <span class="menu-item-title">Category</span>
+        </a>
+      </li>
+      <li class="menu-item nav-item" [routerLinkActive]="['active']">
+        <a class="menu-link nav-link" [routerLinkActive]="['active']" [routerLink]="['/inventory/subcategory-list']">
+          <i class="menu-item-icon"></i>
+          <span class="menu-item-title">Subcategory</span>
+        </a>
+      </li>
+      <li class="menu-item nav-item" [routerLinkActive]="['active']">
         <a class="menu-link nav-link" [routerLinkActive]="['active']" [routerLink]="['/inventory/product-list']">
           <i class="menu-item-icon"></i>
           <span class="menu-item-title">Products</span>

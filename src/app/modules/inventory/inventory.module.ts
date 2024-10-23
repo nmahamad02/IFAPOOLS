@@ -8,6 +8,10 @@ import { ChartsModule } from 'ng2-charts';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { HomeModule } from '../home/home.module';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
+import { CategoryListComponent } from './category/category-list/category-list.component';
+import { CategoryDetailsComponent } from './category/category-details/category-details.component';
+import { SubcategoryListComponent } from './subcategory/subcategory-list/subcategory-list.component';
+import { SubcategoryDetailComponent } from './subcategory/subcategory-detail/subcategory-detail.component';
 
 export const inventoryRoutes = [
   {
@@ -17,13 +21,33 @@ export const inventoryRoutes = [
   {
     path: 'product/details/:id',
     component: ProductDetailsComponent
+  },
+  {
+    path: 'category-list',
+    component: CategoryListComponent
+  },
+  {
+    path: 'category/details/:id',
+    component: CategoryDetailsComponent
+  },
+  {
+    path: 'subcategory-list',
+    component: SubcategoryListComponent
+  },
+  {
+    path: 'subcategory/details/:id',
+    component: SubcategoryDetailComponent
   }
 ];
 
 @NgModule({
   declarations: [
     ProductListComponent,
-    ProductDetailsComponent, 
+    ProductDetailsComponent,
+    CategoryListComponent,
+    CategoryDetailsComponent,
+    SubcategoryListComponent,
+    SubcategoryDetailComponent, 
   ],
   imports: [
     HomeModule,

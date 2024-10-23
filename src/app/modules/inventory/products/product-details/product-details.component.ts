@@ -14,6 +14,8 @@ import { UploadService } from 'src/app/services/upload/upload.service';
 })
 export class ProductDetailsComponent implements OnInit {
   @ViewChild('prodLookupDialog', { static: false }) prodLookupDialog!: TemplateRef<any>;
+  @ViewChild('docLookupDialog', { static: false }) docLookupDialog!: TemplateRef<any>;
+  @ViewChild('imgLookupDialog', { static: false }) imgLookupDialog!: TemplateRef<any>;
 
   currentYear = new Date().getFullYear()
 
@@ -75,6 +77,8 @@ export class ProductDetailsComponent implements OnInit {
       locationStock: new FormArray([]),
       documents: new FormArray([]),
       images: new FormArray([]),
+      newDocuments: new FormArray([]),
+      newImages: new FormArray([]),
     });
   }
 
@@ -117,11 +121,11 @@ export class ProductDetailsComponent implements OnInit {
       prodDocumentType: new FormControl('', []),      
       prodDocumentUrl: new FormControl('', [])
     });
-    this.documents.push(document)
+    this.newDocuments.push(document)
   }
 
   deleteDocument(index: number) {
-    this.documents.removeAt(index)
+    this.newDocuments.removeAt(index)
   }
   
   addImage() {
@@ -132,11 +136,11 @@ export class ProductDetailsComponent implements OnInit {
       prodImageType: new FormControl('', []),      
       prodImageUrl: new FormControl('', [])
     });
-    this.images.push(image)
+    this.newImages.push(image)
   }
 
   deleteImage(index: number) {
-    this.images.removeAt(index)
+    this.newImages.removeAt(index)
   }
 
   onFileChange(event: any, type: string) {
@@ -148,15 +152,15 @@ export class ProductDetailsComponent implements OnInit {
         const fileNm: string = fileToUpload.name;
         reader.readAsDataURL(fileToUpload);
         reader.onload = () => {
-          const docUrl = "https://ifapools-alrashidpools.s3.amazonaws.com/documents/" + fileNm
-            const image = new FormGroup({
-              prodImage: new FormControl(fileToUpload, []),
-              prodImageSrc: new FormControl(reader.result as String, []),
-              prodImageSource: new FormControl(fileNm, []),
-              prodImageType: new FormControl('', []),      
-              prodImageUrl: new FormControl(docUrl, [])
-            });
-            this.images.push(image)
+          const docUrl = "https://ifapools-alrashidpools.s3.amazonaws.com/images/" + fileNm
+          const image = new FormGroup({
+            prodImage: new FormControl(fileToUpload, []),
+            prodImageSrc: new FormControl(reader.result as String, []),
+            prodImageSource: new FormControl(fileNm, []),
+            prodImageType: new FormControl('', []),      
+            prodImageUrl: new FormControl(docUrl, [])
+          });
+          this.newImages.push(image)
         };
         this.clearExtra(type)
         //this.selectedFileToUpload = fileToUpload;
@@ -168,14 +172,14 @@ export class ProductDetailsComponent implements OnInit {
         reader.readAsDataURL(fileToUpload);
         reader.onload = () => {
           const docUrl = "https://ifapools-alrashidpools.s3.amazonaws.com/documents/" + fileNm
-            const document = new FormGroup({
-              prodDocument: new FormControl(fileToUpload, []),
-              prodDocumentSrc: new FormControl(reader.result as String, []),
-              prodDocumentSource: new FormControl(fileNm, []),
-              prodDocumentType: new FormControl('', []),      
-              prodDocumentUrl: new FormControl(docUrl, [])
-            });
-            this.documents.push(document)
+          const document = new FormGroup({
+            prodDocument: new FormControl(fileToUpload, []),
+            prodDocumentSrc: new FormControl(reader.result as String, []),
+            prodDocumentSource: new FormControl(fileNm, []),
+            prodDocumentType: new FormControl('', []),      
+            prodDocumentUrl: new FormControl(docUrl, [])
+          });
+          this.newDocuments.push(document)
         };
         this.clearExtra(type)
         //this.selectedFileToUpload = fileToUpload;
@@ -186,21 +190,21 @@ export class ProductDetailsComponent implements OnInit {
 
   clearExtra(type: string) {
     if(type === "I") {
-      for(let i=0; i<this.images.length; i++){
-        if(this.images.at(i).value.prodImage === ""){
+      for(let i=0; i<this.newImages.length; i++){
+        if(this.newImages.at(i).value.prodImage === ""){
           console.log('empty')
           this.deleteImage(i);
         } else {
-          console.log(this.images.at(i).value.prodImage)
+          console.log(this.newImages.at(i).value.prodImage)
         }
       }
     } else if (type === "D") {
-      for(let i=0; i<this.documents.length; i++){
-        if(this.documents.at(i).value.prodDocument === ""){
+      for(let i=0; i<this.newDocuments.length; i++){
+        if(this.newDocuments.at(i).value.prodDocument === ""){
           console.log('empty')
           this.deleteDocument(i);
         } else {
-          console.log(this.documents.at(i).value.prodDocument)
+          console.log(this.newDocuments.at(i).value.prodDocument)
         }
       }
     }
@@ -215,7 +219,7 @@ export class ProductDetailsComponent implements OnInit {
         console.log("insert")
         this.productService.postProduct(data.pcode.toUpperCase(), data.description, data.subCategoryId, data.costPrice, data.retailPrice, data.barcode, data.manufacturerId, data.reQty,data.supplierId, data.qoh, data.year, data.dealerPrice, data.remarks, data.qoo, data.brand, data.model, data.dealer, '')
         
-        for(let i=0; i<data.locationStock.length;i++) {
+        /*for(let i=0; i<data.locationStock.length;i++) {
           this.productService.postProductLocations(data.pcode.toUpperCase(),data.locationStock[i].prodLocation,data.locationStock[i].prodOpeningQty,data.year)
         }
 
@@ -227,7 +231,7 @@ export class ProductDetailsComponent implements OnInit {
         for(let i=0; i<data.images.length; i++) {
           this.uploadService.uploadImage(data.images[i].prodImage)
           this.productService.postProductDocuments(data.pcode.toUpperCase(), data.images[i].prodImageSource,data.images[i].prodImageType,'IMG')
-        }
+        }*/
 
         this._snackBar.open("Data Successfully Inserted!", "OK");
         //this.refreshForm();
@@ -237,60 +241,7 @@ export class ProductDetailsComponent implements OnInit {
         console.log("update")
 
         this.productService.updateProduct(data.pcode.toUpperCase(), data.description, data.subCategoryId, data.costPrice, data.retailPrice, data.barcode, data.manufacturerId, data.reQty, data.supplierId, data.qoh, data.year, data.dealerPrice, data.remarks, data.qoo, data.brand, data.model, data.dealer, '')
-        for(let i=0; i<data.locationStock.length;i++) {
-          this.productService.updateProductLocations(data.pcode.toUpperCase(),data.locationStock[i].prodLocation,data.locationStock[i].prodOpeningQty,data.year)
-        }
-
-        this.productService.getProductDocuments(data.pcode,'DOC').subscribe((respo: any) => {
-          if (respo.recordset.length === 0) {
-            for(let i=0; i<data.documents.length; i++) {
-              this.uploadService.uploadDoc(data.documents[i].prodDocument)
-              this.productService.postProductDocuments(data.pcode.toUpperCase(), data.documents[i].prodDocumentSource,data.documents[i].prodDocumentType,'DOC')
-            }
-          } else {
-            this.productService.deleteProductDocument(data.pcode,'DOC').subscribe(() => {
-              for(let i=0; i<data.documents.length; i++) {
-                if(data.documents[i].prodDocument === 'Existing'){
-                  this.productService.postProductDocuments(data.pcode.toUpperCase(), data.documents[i].prodDocumentSource,data.documents[i].prodDocumentType,'DOC')
-                } else {
-                  this.uploadService.uploadDoc(data.documents[i].prodDocument)
-                  this.productService.postProductDocuments(data.pcode.toUpperCase(), data.documents[i].prodDocumentSource,data.documents[i].prodDocumentType,'DOC')
-                }
-              }
-            })
-          }
-        }, (erro: any) => {
-          for(let i=0; i<data.documents.length; i++) {
-            this.uploadService.uploadDoc(data.documents[i].prodDocument)
-            this.productService.postProductDocuments(data.pcode.toUpperCase(), data.documents[i].prodDocumentSource,data.documents[i].prodDocumentType,'DOC')
-          }
-        })
-
-        this.productService.getProductDocuments(data.pcode,'IMG').subscribe((respo: any) => {
-          if (respo.recordset.length === 0) {
-            for(let i=0; i<data.images.length; i++) {
-              this.uploadService.uploadImage(data.images[i].prodImage)
-              this.productService.postProductDocuments(data.pcode.toUpperCase(), data.images[i].prodImageSource,data.images[i].prodImageType,'IMG')
-            }
-          } else {
-            this.productService.deleteProductDocument(data.pcode,'IMG').subscribe(() => {
-              for(let i=0; i<data.images.length; i++) {
-                if(data.images[i].prodImage == 'Existing') {
-                  this.productService.postProductDocuments(data.pcode.toUpperCase(), data.images[i].prodImageSource,data.images[i].prodImageType,'IMG')
-                } else {
-                  this.uploadService.uploadImage(data.images[i].prodImage)
-                  this.productService.postProductDocuments(data.pcode.toUpperCase(), data.images[i].prodImageSource,data.images[i].prodImageType,'IMG')  
-                }
-              }
-            })
-          }
-        }, (erro: any) => {
-          for(let i=0; i<data.images.length; i++) {
-            this.uploadService.uploadImage(data.images[i].prodImage)
-            this.productService.postProductDocuments(data.pcode.toUpperCase(), data.images[i].prodImageSource,data.images[i].prodImageType,'IMG')
-          }
-        })
-      
+        
         this._snackBar.open("Data Successfully Updated!", "OK");
         //this.refreshForm();        
         this.getData(data.pcode.toUpperCase());
@@ -300,27 +251,54 @@ export class ProductDetailsComponent implements OnInit {
       console.log("insert")
 
       this.productService.postProduct(data.pcode, data.description, data.subCategoryId, data.costPrice, data.retailPrice, data.barcode, data.manufacturerId, data.reQty,data.supplierId, data.qoh, data.year, data.dealerPrice, data.remarks, data.qoo, data.brand, data.model, data.dealer, '')
-        
-        for(let i=0; i<data.locationStock.length;i++) {
-          this.productService.postProductLocations(data.pcode,data.locationStock[i].prodLocation,data.locationStock[i].prodOpeningQty,data.year)
-        }
-
-        for(let i=0; i<data.documents.length; i++) {
-          this.uploadService.uploadDoc(data.documents[i].prodDocument)
-          this.productService.postProductDocuments(data.pcode, data.documents[i].prodDocumentSource,data.documents[i].prodDocumentType,'DOC')
-        }
-
-        for(let i=0; i<data.images.length; i++) {
-          this.uploadService.uploadImage(data.images[i].prodImage)
-          this.productService.postProductDocuments(data.pcode, data.images[i].prodImageSource,data.images[i].prodImageType,'IMG')
-        }
-
-        this._snackBar.open("Data Successfully Inserted!", "OK");
-        //this.refreshForm();
-        this.getData(data.pcode);
+      this._snackBar.open("Data Successfully Inserted!", "OK");
+      //this.refreshForm();
+      this.getData(data.pcode);
 
     })
     
+  }
+
+  addNewImages() {
+    let dialogRef = this.dialog.open(this.imgLookupDialog);
+  }
+
+  addNewDocuments() {
+    let dialogRef = this.dialog.open(this.docLookupDialog);
+  }
+
+  submitNewDocuments() {
+    const data = this.prodForm.value
+    console.log(this.prodForm.value)
+    for(let j=0; j<this.newDocuments.length; j++) {
+      console.log(this.newDocuments)
+      if(this.newDocuments.at(j).value.prodDocumentType === '') {
+        alert('Please enter the type for the document you have uploaded for this property.')
+        break;
+      } else {
+        this.uploadService.uploadDoc(this.newDocuments.at(j).value.prodDocument)
+        this.productService.postProductDocuments(data.pcode.toUpperCase(), data.newDocuments[j].prodDocumentSource,data.newDocuments[j].prodDocumentType,'DOC')
+        this.getData(data.pcode)
+      } 
+    }
+    let dialogRef = this.dialog.closeAll()
+  }
+
+  submitNewImages() {
+    const data = this.prodForm.value
+    console.log(this.prodForm.value)
+    for(let j=0; j<this.newImages.length; j++) {
+      console.log(this.newImages)
+      if(this.newImages.at(j).value.pDocumentType === '') {
+        alert('Please enter the type for the document you have uploaded for this property.')
+        break;
+      } else {
+        this.uploadService.uploadImage(this.newImages.at(j).value.prodImage)
+        this.productService.postProductDocuments(data.pcode.toUpperCase(), data.newImages[j].prodImageSource,data.newImages[j].prodImageType,'IMG')
+        this.getData(data.pcode)
+      } 
+    }
+    let dialogRef = this.dialog.closeAll()
   }
 
   ngOnInit() {
@@ -358,6 +336,8 @@ export class ProductDetailsComponent implements OnInit {
       locationStock: new FormArray([]),
       documents: new FormArray([]),
       images: new FormArray([]),
+      newDocuments: new FormArray([]),
+      newImages: new FormArray([]),
     });
     this.productService.getLocationWiseProduct('NEW',String(this.currentYear)).subscribe((respo: any) => {
       const locStockArr = respo.recordset;
@@ -398,6 +378,8 @@ export class ProductDetailsComponent implements OnInit {
       locationStock: new FormArray([]),
       documents: new FormArray([]),
       images: new FormArray([]),
+      newDocuments: new FormArray([]),
+      newImages: new FormArray([]),
     });
   }
 
@@ -631,13 +613,10 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
-
   selectProduct(prod: any) {
     this.getData(prod.PCODE)
     let dialogRef = this.dialog.closeAll();
   }
-
-
 
   highlight(type: string, index: number){
     console.log(index);
@@ -674,4 +653,14 @@ export class ProductDetailsComponent implements OnInit {
   get images(): FormArray {
     return this.prodForm.get('images') as FormArray
   }
+  
+  get newDocuments(): FormArray {
+    return this.prodForm.get('newDocuments') as FormArray
+  }
+  
+  get newImages(): FormArray {
+    return this.prodForm.get('newImages') as FormArray
+  }
+
+
 }
